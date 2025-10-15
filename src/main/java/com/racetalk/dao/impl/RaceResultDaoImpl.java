@@ -78,17 +78,17 @@ public class RaceResultDaoImpl implements RaceResultDao {
                         .findFirst()
                         .orElse(null);
 
-                    Driver driver = driverDao.findById(rs.getInt("driver_id")).orElse(null);
+                Driver driver = driverDao.findById(rs.getInt("driver_id")).orElse(null);
 
-                    result.setRace(race);
-                    result.setDriver(driver);
-                    result.setPosition(rs.getInt("position"));
-                    result.setPoints(rs.getInt("points"));
-                    results.add(result);
-                }
+                result.setRace(race);
+                result.setDriver(driver);
+                result.setPosition(rs.getInt("position"));
+                result.setPoints(rs.getInt("points"));
+                results.add(result);
+            }
             return results;
             } catch (SQLException e) {
-            throw new RuntimeException();
+                throw new RuntimeException();
         }
     }
 }
