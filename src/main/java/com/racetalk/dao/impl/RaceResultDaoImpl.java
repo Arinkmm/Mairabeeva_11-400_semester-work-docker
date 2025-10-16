@@ -19,17 +19,16 @@ public class RaceResultDaoImpl implements RaceResultDao {
 
     @Override
     public void create(RaceResult result) {
-        String sql = "INSERT INTO race_results (id, race_id, driver_id, position, points) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO race_results (race_id, driver_id, position, points) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, result.getId());
-            ps.setInt(2, result.getRace().getId());
-            ps.setInt(3, result.getDriver().getId());
-            ps.setInt(4, result.getPosition());
-            ps.setInt(5, result.getPoints());
+            ps.setInt(1, result.getRace().getId());
+            ps.setInt(2, result.getDriver().getId());
+            ps.setInt(3, result.getPosition());
+            ps.setInt(4, result.getPoints());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -45,7 +44,7 @@ public class RaceResultDaoImpl implements RaceResultDao {
             ps.setInt(5, result.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -58,7 +57,7 @@ public class RaceResultDaoImpl implements RaceResultDao {
             ResultSet rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -88,7 +87,7 @@ public class RaceResultDaoImpl implements RaceResultDao {
             }
             return results;
             } catch (SQLException e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
         }
     }
 }

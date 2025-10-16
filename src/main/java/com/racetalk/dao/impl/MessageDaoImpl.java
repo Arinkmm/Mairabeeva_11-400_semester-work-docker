@@ -29,7 +29,7 @@ public class MessageDaoImpl implements MessageDao {
             ps.setTimestamp(3, Timestamp.valueOf(message.getCreatedAt()));
             ps.executeUpdate();
             } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -54,7 +54,7 @@ public class MessageDaoImpl implements MessageDao {
             }
             return messages;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }

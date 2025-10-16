@@ -23,7 +23,7 @@ public class NoteDaoImpl implements NoteDao {
             ps.setTimestamp(4, Timestamp.valueOf(note.getCreatedAt()));
             ps.executeUpdate();
             } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -46,7 +46,7 @@ public class NoteDaoImpl implements NoteDao {
                 }
             return notes;
             } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }

@@ -17,10 +17,10 @@ public class RaceDaoImpl implements RaceDao {
 
     @Override
     public void create(Race race) {
-        String sql = "INSERT INTO races (id, name, location, race_date, is_finished) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO races (session_key, name, location, race_date, is_finished) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, race.getId());
+            ps.setInt(1, race.getSessionKey());
             ps.setString(2, race.getName());
             ps.setString(3, race.getLocation());
             ps.setDate(4, Date.valueOf(race.getRaceDate()));
@@ -31,21 +31,24 @@ public class RaceDaoImpl implements RaceDao {
         }
     }
 
+
     @Override
     public void update(Race race) {
-        String sql = "UPDATE races SET name=?, location=?, race_date=?, is_finished=? WHERE id=?";
+        String sql = "UPDATE races SET session_key=?, name=?, location=?, race_date=?, is_finished=? WHERE id=?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, race.getName());
-            ps.setString(2, race.getLocation());
-            ps.setDate(3, Date.valueOf(race.getRaceDate()));
-            ps.setBoolean(4, race.isFinished());
-            ps.setInt(5, race.getId());
+            ps.setInt(1, race.getSessionKey());
+            ps.setString(2, race.getName());
+            ps.setString(3, race.getLocation());
+            ps.setDate(4, Date.valueOf(race.getRaceDate()));
+            ps.setBoolean(5, race.isFinished());
+            ps.setInt(6, race.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public boolean existsById(int id) {
@@ -70,6 +73,7 @@ public class RaceDaoImpl implements RaceDao {
             while (rs.next()) {
                 Race race = new Race();
                 race.setId(rs.getInt("id"));
+                race.setId(rs.getInt("session_key"));
                 race.setName(rs.getString("name"));
                 race.setLocation(rs.getString("location"));
                 race.setRaceDate(rs.getDate("race_date").toLocalDate());
