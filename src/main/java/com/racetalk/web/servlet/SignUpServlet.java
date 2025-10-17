@@ -17,7 +17,7 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getRequestDispatcher("templates/sign_up.ftl").forward(req, resp);
+        req.getRequestDispatcher("/templates/sign_up.ftl").forward(req, resp);
     }
 
     @Override
