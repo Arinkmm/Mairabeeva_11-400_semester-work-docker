@@ -26,7 +26,7 @@ public class DriverProfileServlet extends HttpServlet {
         }
 
         int driverId = Integer.parseInt(idInput);
-        Optional<Driver> driverOptional = driverService.findById(driverId);
+        Optional<Driver> driverOptional = driverService.getById(driverId);
         if (driverOptional.isEmpty()) {
             req.setAttribute("errorMessage", "Driver not found");
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);

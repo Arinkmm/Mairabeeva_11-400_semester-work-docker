@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RaceDao {
-    public void create(Race race);
+    void create(Race race);
 
-    public void update(Race race);
+    void update(Race race);
 
-    public boolean existsById(int id);
+    boolean existsById(int id);
 
-    public List<Race> findUpcomingRaces();
+    List<Race> findUpcomingRaces();
 
-    public List<Race> findAll();
+    List<Race> findAll();
 
     Optional<Race> findBySessionKey(int sessionKey);
 

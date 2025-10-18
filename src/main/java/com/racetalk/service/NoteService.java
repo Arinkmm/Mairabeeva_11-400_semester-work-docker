@@ -6,7 +6,7 @@ import com.racetalk.entity.User;
 import java.util.List;
 
 public interface NoteService {
-    public void addNote(Note note);
+    void addNote(Note note);
 
-    public List<Note> getUserNotes(User user);
+    List<Note> getUserNotes(User user);
 }

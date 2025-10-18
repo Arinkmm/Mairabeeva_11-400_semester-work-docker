@@ -20,7 +20,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Optional<Team> findById(int id) {
+    public Optional<Team> getById(int id) {
         return teamDao.findById(id);
     }
 }

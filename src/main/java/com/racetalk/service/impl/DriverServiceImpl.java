@@ -20,7 +20,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Optional<Driver> findById(int id) {
+    public Optional<Driver> getById(int id) {
         return driverDao.findById(id);
     }
 }

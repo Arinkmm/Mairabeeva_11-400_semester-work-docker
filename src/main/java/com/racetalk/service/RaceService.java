@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RaceService {
-    public List<Race> getUpcomingRaces();
+    List<Race> getUpcomingRaces();
 
-    public List<Race> getAll();
+    List<Race> getAll();
 
-    public Optional<Race> getById(int id);
+    Optional<Race> getById(int id);
 }

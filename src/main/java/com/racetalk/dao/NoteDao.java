@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface NoteDao {
-    public void create(Note note);
+    void create(Note note);
 
-    public List<Note> findByUser(User user);
+    List<Note> findByUser(User user);
 }

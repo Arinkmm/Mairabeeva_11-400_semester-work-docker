@@ -5,11 +5,11 @@ import com.racetalk.entity.RaceResult;
 import java.util.List;
 
 public interface RaceResultDao {
-    public void create(RaceResult result);
+    void create(RaceResult result);
 
-    public void update(RaceResult result);
+    void update(RaceResult result);
 
-    public boolean existsById(int id);
+    boolean existsById(int id);
 
-    public List<RaceResult> getResultsByRaceId(int raceId);
+    List<RaceResult> findResultsByRaceId(int raceId);
 }

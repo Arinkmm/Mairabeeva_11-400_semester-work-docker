@@ -5,9 +5,9 @@ import com.racetalk.entity.User;
 import java.util.Optional;
 
 public interface UserDao {
-    public void create(User user);
+    void create(User user);
 
-    public Optional<User> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-    public Optional<User> findById(int id);
+    Optional<User> findById(int id);
 }

@@ -26,7 +26,7 @@ public class TeamDetailsServlet extends HttpServlet {
         }
 
         int teamId = Integer.parseInt(idInput);
-        Optional<Team> teamOptional = teamService.findById(teamId);
+        Optional<Team> teamOptional = teamService.getById(teamId);
         if (teamOptional.isEmpty()) {
             req.setAttribute("errorMessage", "Team not found");
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);

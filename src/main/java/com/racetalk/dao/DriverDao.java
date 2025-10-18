@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DriverDao {
-    public void create(Driver driver);
+    void create(Driver driver);
 
-    public Optional<Driver> findById(int id);
+    Optional<Driver> findById(int id);
 
-    public List<Driver> findAll();
+    List<Driver> findAll();
 }

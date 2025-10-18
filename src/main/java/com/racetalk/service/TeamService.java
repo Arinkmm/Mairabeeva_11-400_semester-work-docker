@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TeamService {
-    public List<Team> getAllTeams();
+    List<Team> getAllTeams();
 
-    public Optional<Team> findById(int id);
+    Optional<Team> getById(int id);
 }

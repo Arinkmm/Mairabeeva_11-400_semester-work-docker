@@ -62,7 +62,7 @@ public class RaceResultDaoImpl implements RaceResultDao {
     }
 
     @Override
-    public List<RaceResult> getResultsByRaceId(int raceId) {
+    public List<RaceResult> findResultsByRaceId(int raceId) {
         String sql = "SELECT * FROM race_results WHERE race_id = ? ORDER BY position";
         List<RaceResult> results = new ArrayList<>();
         try {

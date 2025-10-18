@@ -15,6 +15,6 @@ public class RaceResultServiceImpl implements RaceResultService {
 
     @Override
     public List<RaceResult> getResultsByRaceId(int raceId) {
-        return raceResultDao.getResultsByRaceId(raceId);
+        return raceResultDao.findResultsByRaceId(raceId);
     }
 }
