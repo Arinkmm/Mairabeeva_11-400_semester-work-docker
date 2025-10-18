@@ -1,4 +1,41 @@
 package com.racetalk.web.servlet;
 
-public class TeamDetailsServlet {
+import com.racetalk.dao.impl.TeamDaoImpl;
+import com.racetalk.entity.Team;
+import com.racetalk.service.TeamService;
+import com.racetalk.service.impl.TeamServiceImpl;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Optional;
+
+@WebServlet(name = "TeamDetails", urlPatterns = "/team/details")
+public class TeamDetailsServlet extends HttpServlet {
+    private TeamService teamService = new TeamServiceImpl(new TeamDaoImpl());
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idInput = req.getParameter("id");
+        if (idInput == null) {
+            req.setAttribute("errorMessage", "Team ID is missing");
+            req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+        }
+
+        int teamId = Integer.parseInt(idInput);
+        Optional<Team> teamOptional = teamService.findById(teamId);
+        if (teamOptional.isEmpty()) {
+            req.setAttribute("errorMessage", "Team not found");
+            req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+        }
+
+        Team team = teamOptional.get();
+
+        req.setAttribute("team", team);
+
+        req.getRequestDispatcher("/templates/team_details.ftl").forward(req, resp);
+    }
 }

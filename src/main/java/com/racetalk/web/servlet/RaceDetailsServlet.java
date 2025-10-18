@@ -45,6 +45,6 @@ public class RaceDetailsServlet extends HttpServlet {
         req.setAttribute("race", race);
         req.setAttribute("results", results);
 
-        req.getRequestDispatcher("/templates/raceDetails.ftl").forward(req, resp);
+        req.getRequestDispatcher("/templates/race_details.ftl").forward(req, resp);
     }
 }
