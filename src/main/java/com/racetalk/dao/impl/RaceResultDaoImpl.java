@@ -13,15 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RaceResultDaoImpl implements RaceResultDao {
-    private final Connection connection = DatabaseConnectionUtil.getConnection();
-    private final RaceDao raceDao = new RaceDaoImpl();
-    private final DriverDao driverDao = new DriverDaoImpl();
+    private final DatabaseConnectionUtil databaseConnection;
+    private final RaceDao raceDao;
+    private final DriverDao driverDao;
+
+    public RaceResultDaoImpl(DatabaseConnectionUtil databaseConnection, RaceDao raceDao, DriverDao driverDao) {
+        this.databaseConnection = databaseConnection;
+        this.raceDao = raceDao;
+        this.driverDao = driverDao;
+    }
 
     @Override
     public void create(RaceResult result) {
         String sql = "INSERT INTO race_results (race_id, driver_id, position, points) VALUES (?, ?, ?, ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, result.getRace().getId());
             ps.setInt(2, result.getDriver().getId());
             ps.setInt(3, result.getPosition());
@@ -35,8 +41,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
     @Override
     public void update(RaceResult result) {
         String sql = "UPDATE race_results SET race_id=?, driver_id=?, position=?, points=? WHERE id=?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, result.getRace().getId());
             ps.setInt(2, result.getDriver().getId());
             ps.setInt(3, result.getPosition());
@@ -51,8 +57,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
     @Override
     public boolean existsById(int id) {
         String sql = "SELECT 1 FROM race_results WHERE id = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             return rs.next();
@@ -65,8 +71,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
     public List<RaceResult> findResultsByRaceId(int raceId) {
         String sql = "SELECT * FROM race_results WHERE race_id = ? ORDER BY position";
         List<RaceResult> results = new ArrayList<>();
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, raceId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

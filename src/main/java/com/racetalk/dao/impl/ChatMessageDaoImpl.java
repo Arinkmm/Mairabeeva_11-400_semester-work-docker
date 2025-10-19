@@ -10,15 +10,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatChatMessageDaoImpl implements ChatMessageDao {
-    private final Connection connection = DatabaseConnectionUtil.getConnection();
-    private final UserDao userDao = new UserDaoImpl();
+public class ChatMessageDaoImpl implements ChatMessageDao {
+    private final DatabaseConnectionUtil databaseConnection;
+    private final UserDao userDao;
+
+    public ChatMessageDaoImpl(DatabaseConnectionUtil databaseConnection, UserDao userDao) {
+        this.databaseConnection = databaseConnection;
+        this.userDao = userDao;
+    }
 
     @Override
     public void create(ChatMessage chatMessage) {
         String sql = "INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             if (chatMessage.getUser() != null) {
                 ps.setInt(1, chatMessage.getUser().getId());
             } else {
@@ -28,7 +33,7 @@ public class ChatChatMessageDaoImpl implements ChatMessageDao {
             ps.setString(2, chatMessage.getContent());
             ps.setTimestamp(3, Timestamp.valueOf(chatMessage.getCreatedAt()));
             ps.executeUpdate();
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -37,10 +42,10 @@ public class ChatChatMessageDaoImpl implements ChatMessageDao {
     public List<ChatMessage> findAll() {
         String sql = "SELECT * FROM messages ORDER BY created_at ASC";
         List<ChatMessage> chatMessages = new ArrayList<>();
-        try {
+        try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery();
-             while (rs.next()) {
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
                 ChatMessage chatMessage = new ChatMessage();
                 chatMessage.setId(rs.getInt("id"));
                 int userId = rs.getInt("user_id");

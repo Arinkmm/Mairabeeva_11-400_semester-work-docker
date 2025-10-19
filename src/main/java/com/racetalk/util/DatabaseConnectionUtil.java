@@ -1,26 +1,38 @@
 package com.racetalk.util;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnectionUtil {
-    private static Connection connection;
+public class DatabaseConnectionUtil{
+    private HikariDataSource ds;
 
-    public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                Class.forName("org.postgresql.Driver");
-                connection = DriverManager.getConnection(
-                        "jdbc:postgresql://localhost:5432/racetalk_db",
-                        "postgres",
-                        "08122006Ar"
-                );   // JDBC URL, username and password for connecting to the PostgreSQL database "racetalk_db" running on localhost at the default port 5432.
+    private DatabaseConnectionUtil() {
+        HikariConfig config = new HikariConfig();
 
-            } catch (ClassNotFoundException | SQLException e) {
-                throw new RuntimeException(e);
-            }
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/racetalk_db");
+        config.setUsername("postgres");
+        config.setPassword("08122006Ar");
+        config.setDriverClassName("org.postgresql.Driver");
+
+        config.setMaximumPoolSize(25);
+        config.setMinimumIdle(5);
+        config.setConnectionTimeout(20000);
+        config.setIdleTimeout(300000);
+        config.setMaxLifetime(1800000);
+        config.setAutoCommit(true);
+
+        ds = new HikariDataSource(config);
+    }
+
+    public Connection getConnection() {
+        try {
+            return ds.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return connection;
     }
 }
+

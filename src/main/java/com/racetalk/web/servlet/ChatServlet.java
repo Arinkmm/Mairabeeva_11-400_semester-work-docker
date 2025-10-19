@@ -1,7 +1,7 @@
 package com.racetalk.web.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.racetalk.dao.impl.ChatChatMessageDaoImpl;
+import com.racetalk.dao.impl.ChatMessageDaoImpl;
 import com.racetalk.entity.ChatMessage;
 import com.racetalk.entity.User;
 import com.racetalk.service.ChatMessageService;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "Chat", urlPatterns = "/chat")
 public class ChatServlet extends HttpServlet {
-    private ChatMessageService chatService = new ChatMessageServiceImpl(new ChatChatMessageDaoImpl());
+    private ChatMessageService chatService = new ChatMessageServiceImpl(new ChatMessageDaoImpl());
     private final static ObjectMapper mapper = new ObjectMapper();
 
     @Override

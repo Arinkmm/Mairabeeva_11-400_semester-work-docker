@@ -10,13 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class TeamDaoImpl implements TeamDao {
-    private final Connection connection = DatabaseConnectionUtil.getConnection();
+    private final DatabaseConnectionUtil databaseConnection;
+
+    public TeamDaoImpl(DatabaseConnectionUtil databaseConnection) {
+        this.databaseConnection = databaseConnection;
+    }
 
     @Override
     public void create(Team team) {
         String sql = "INSERT INTO teams (name, country, founded_year) VALUES (?, ?, ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, team.getName());
             ps.setString(2, team.getCountry());
             ps.setInt(3, team.getFoundedYear());
@@ -29,8 +33,8 @@ public class TeamDaoImpl implements TeamDao {
     @Override
     public Optional<Team> findById(int id) {
         String sql = "SELECT * FROM teams WHERE id = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -51,8 +55,8 @@ public class TeamDaoImpl implements TeamDao {
     public List<Team> findAll() {
         String sql = "SELECT * FROM teams";
         List<Team> teams = new ArrayList<>();
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Team team = new Team();
