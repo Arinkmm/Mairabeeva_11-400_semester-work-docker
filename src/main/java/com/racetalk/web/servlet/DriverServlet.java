@@ -1,9 +1,7 @@
 package com.racetalk.web.servlet;
 
-import com.racetalk.dao.impl.DriverDaoImpl;
 import com.racetalk.entity.Driver;
 import com.racetalk.service.DriverService;
-import com.racetalk.service.impl.DriverServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +13,15 @@ import java.util.List;
 
 @WebServlet(name = "Drivers", urlPatterns = "/drivers")
 public class DriverServlet extends HttpServlet {
-    private DriverService driverService = new DriverServiceImpl(new DriverDaoImpl());
+    private DriverService driverService;
+
+    @Override
+    public void init() {
+        driverService = (DriverService) getServletContext().getAttribute("driverService");
+        if (driverService == null) {
+            throw new IllegalStateException("DriverService not initialized");
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

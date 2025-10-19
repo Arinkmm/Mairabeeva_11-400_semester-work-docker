@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseConnectionUtil{
+    private static DatabaseConnectionUtil instance;
     private HikariDataSource ds;
 
     private DatabaseConnectionUtil() {
@@ -25,6 +26,13 @@ public class DatabaseConnectionUtil{
         config.setAutoCommit(true);
 
         ds = new HikariDataSource(config);
+    }
+
+    public static synchronized DatabaseConnectionUtil getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnectionUtil();
+        }
+        return instance;
     }
 
     public Connection getConnection() {

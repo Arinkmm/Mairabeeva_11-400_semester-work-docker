@@ -1,9 +1,7 @@
 package com.racetalk.web.servlet;
 
-import com.racetalk.dao.impl.TeamDaoImpl;
 import com.racetalk.entity.Team;
 import com.racetalk.service.TeamService;
-import com.racetalk.service.impl.TeamServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +13,15 @@ import java.util.List;
 
 @WebServlet(name = "Teams", urlPatterns = "/teams")
 public class TeamServlet extends HttpServlet {
-    private TeamService teamService = new TeamServiceImpl(new TeamDaoImpl());
+    private TeamService teamService;
+
+    @Override
+    public void init() {
+        teamService = (TeamService) getServletContext().getAttribute("teamService");
+        if (teamService == null) {
+            throw new IllegalStateException("TeamService not initialized");
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -13,7 +13,15 @@ import java.io.IOException;
 
 @WebServlet(name = "SignUp", urlPatterns = "/sign_up")
 public class SignUpServlet extends HttpServlet {
-    private final UserService userService = new UserServiceImpl(new UserDaoImpl());
+    private UserService userService;
+
+    @Override
+    public void init() {
+        userService = (UserService) getServletContext().getAttribute("userService");
+        if (userService == null) {
+            throw new IllegalStateException("UserService not initialized");
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

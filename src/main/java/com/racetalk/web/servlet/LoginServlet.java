@@ -1,8 +1,6 @@
 package com.racetalk.web.servlet;
 
-import com.racetalk.dao.impl.UserDaoImpl;
 import com.racetalk.service.UserService;
-import com.racetalk.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +9,15 @@ import java.io.IOException;
 
 @WebServlet(name = "Login", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
-    private final UserService userService = new UserServiceImpl(new UserDaoImpl());
+    private UserService userService;
+
+    @Override
+    public void init() {
+        userService = (UserService) getServletContext().getAttribute("userService");
+        if (userService == null) {
+            throw new IllegalStateException("UserService not initialized");
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

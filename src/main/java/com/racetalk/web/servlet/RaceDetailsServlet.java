@@ -1,13 +1,9 @@
 package com.racetalk.web.servlet;
 
-import com.racetalk.dao.impl.RaceDaoImpl;
-import com.racetalk.dao.impl.RaceResultDaoImpl;
 import com.racetalk.entity.Race;
 import com.racetalk.entity.RaceResult;
 import com.racetalk.service.RaceResultService;
 import com.racetalk.service.RaceService;
-import com.racetalk.service.impl.RaceResultServiceImpl;
-import com.racetalk.service.impl.RaceServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +16,17 @@ import java.util.Optional;
 
 @WebServlet(name = "RaceDetails", urlPatterns = "/race/details")
 public class RaceDetailsServlet extends HttpServlet {
-    private RaceService raceService = new RaceServiceImpl(new RaceDaoImpl());
-    private RaceResultService raceResultService = new RaceResultServiceImpl(new RaceResultDaoImpl());
+    private RaceService raceService;
+    private RaceResultService raceResultService;
+
+    @Override
+    public void init() {
+        raceService = (RaceService) getServletContext().getAttribute("raceService");
+        raceResultService = (RaceResultService) getServletContext().getAttribute("raceResultService");
+        if (raceService == null || raceResultService == null) {
+            throw new IllegalStateException("Services are not initialized");
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

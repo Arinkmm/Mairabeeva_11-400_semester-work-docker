@@ -1,10 +1,8 @@
 package com.racetalk.web.servlet;
 
-import com.racetalk.dao.impl.NoteDaoImpl;
 import com.racetalk.entity.Note;
 import com.racetalk.entity.User;
 import com.racetalk.service.NoteService;
-import com.racetalk.service.impl.NoteServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +15,15 @@ import java.util.List;
 
 @WebServlet("/notes")
 public class NoteServlet extends HttpServlet {
-    private NoteService noteService = new NoteServiceImpl(new NoteDaoImpl());
+    private NoteService noteService;
+
+    @Override
+    public void init() {
+        noteService = (NoteService) getServletContext().getAttribute("noteService");
+        if (noteService == null) {
+            throw new IllegalStateException("NoteService not initialized");
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

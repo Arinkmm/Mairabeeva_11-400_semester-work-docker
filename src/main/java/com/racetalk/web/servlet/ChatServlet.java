@@ -1,11 +1,10 @@
 package com.racetalk.web.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.racetalk.dao.impl.ChatMessageDaoImpl;
 import com.racetalk.entity.ChatMessage;
 import com.racetalk.entity.User;
 import com.racetalk.service.ChatMessageService;
-import com.racetalk.service.impl.ChatMessageServiceImpl;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +19,17 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "Chat", urlPatterns = "/chat")
 public class ChatServlet extends HttpServlet {
-    private ChatMessageService chatService = new ChatMessageServiceImpl(new ChatMessageDaoImpl());
     private final static ObjectMapper mapper = new ObjectMapper();
+
+    private ChatMessageService chatMessageService;
+
+    @Override
+    public void init() {
+        chatMessageService = (ChatMessageService) getServletContext().getAttribute("chatMessageService");
+        if (chatMessageService == null) {
+            throw new IllegalStateException("ChatMessageService not initialized");
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,7 +38,7 @@ public class ChatServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/index");
         }
 
-        List<ChatMessage> messages = chatService.getAllMessages();
+        List<ChatMessage> messages = chatMessageService.getAllMessages();
         resp.setContentType("application/json;charset=UTF-8");
 
         List<Map<String, String>> jsonList = messages.stream()
@@ -63,7 +71,7 @@ public class ChatServlet extends HttpServlet {
             message.setContent(messageText);
             message.setCreatedAt(LocalDateTime.now());
 
-            chatService.postMessage(message);
+            chatMessageService.postMessage(message);
 
             resp.sendRedirect(req.getContextPath() + "/chat");
         }
