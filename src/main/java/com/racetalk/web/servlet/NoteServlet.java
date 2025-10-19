@@ -42,9 +42,10 @@ public class NoteServlet extends HttpServlet {
         String title = req.getParameter("title");
         String content = req.getParameter("content");
 
-        if (title == null) {
+        if (title == null || title.trim().isEmpty()) {
             req.setAttribute("noteErrorMessage", "Заголовок не может быть пустым");
-            req.getRequestDispatcher("/templates/notes.ftl").forward(req, resp);
+            doGet(req, resp);
+            return;
         }
 
         Note note = new Note();

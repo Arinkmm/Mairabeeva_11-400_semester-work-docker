@@ -26,16 +26,29 @@ public class TeamDetailsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idInput = req.getParameter("id");
-        if (idInput == null) {
+        if (idInput == null || idInput.trim().isEmpty()) {
             req.setAttribute("errorMessage", "Team ID is missing");
+            req.setAttribute("errorCode", 400);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+            return;
         }
 
-        int teamId = Integer.parseInt(idInput);
+        int teamId;
+        try {
+            teamId = Integer.parseInt(idInput.trim());
+        } catch (NumberFormatException e) {
+            req.setAttribute("errorMessage", "Invalid Team ID format");
+            req.setAttribute("errorCode", 400);
+            req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+            return;
+        }
+
         Optional<Team> teamOptional = teamService.getById(teamId);
         if (teamOptional.isEmpty()) {
             req.setAttribute("errorMessage", "Team not found");
+            req.setAttribute("errorCode", 404);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+            return;
         }
 
         Team team = teamOptional.get();

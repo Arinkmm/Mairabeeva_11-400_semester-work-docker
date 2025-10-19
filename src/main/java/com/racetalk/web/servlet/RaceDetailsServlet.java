@@ -31,16 +31,29 @@ public class RaceDetailsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idInput = req.getParameter("id");
-        if (idInput == null) {
+        if (idInput == null || idInput.trim().isEmpty()) {
             req.setAttribute("errorMessage", "Race ID is missing");
+            req.setAttribute("errorCode", 400);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+            return;
         }
 
-        int raceId = Integer.parseInt(idInput);
+        int raceId;
+        try {
+            raceId = Integer.parseInt(idInput.trim());
+        } catch (NumberFormatException e) {
+            req.setAttribute("errorMessage", "Invalid Race ID format");
+            req.setAttribute("errorCode", 400);
+            req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+            return;
+        }
+
         Optional<Race> raceOptional = raceService.getById(raceId);
         if (raceOptional.isEmpty()) {
             req.setAttribute("errorMessage", "Race not found");
+            req.setAttribute("errorCode", 404);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
+            return;
         }
 
         List<RaceResult> results = raceResultService.getResultsByRaceId(raceId);

@@ -5,7 +5,6 @@ import com.racetalk.entity.ChatMessage;
 import com.racetalk.entity.User;
 import com.racetalk.service.ChatMessageService;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,8 +32,6 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("user");
-
         List<ChatMessage> messages = chatMessageService.getAllMessages();
         resp.setContentType("application/json;charset=UTF-8");
 
@@ -49,23 +46,25 @@ public class ChatServlet extends HttpServlet {
         mapper.writeValue(resp.getWriter(), jsonList);
     }
 
-        @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            User currentUser = (User) req.getSession().getAttribute("user");
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        User currentUser = (User) req.getSession().getAttribute("user");
 
-            String messageText = req.getParameter("message");
-            if (messageText == null) {
-                req.setAttribute("MessageErrorMessage", "Сообщение не может быть пустым");
-                doGet(req, resp);
-            }
+        String messageText = req.getParameter("message");
+        resp.setContentType("application/json;charset=UTF-8");
 
-            ChatMessage message = new ChatMessage();
-            message.setUser(currentUser);
-            message.setContent(messageText);
-            message.setCreatedAt(LocalDateTime.now());
-
-            chatMessageService.postMessage(message);
-
-            resp.sendRedirect(req.getContextPath() + "/chat");
+        if (messageText == null || messageText.trim().isEmpty()) {
+            mapper.writeValue(resp.getWriter(), Map.of("success", false, "message", "Сообщение не может быть пустым"));
+            return;
         }
+
+        ChatMessage message = new ChatMessage();
+        message.setUser(currentUser);
+        message.setContent(messageText.trim());
+        message.setCreatedAt(LocalDateTime.now());
+
+        chatMessageService.postMessage(message);
+
+        mapper.writeValue(resp.getWriter(), Map.of("success", true, "message", "Сообщение отправлено"));
+    }
 }
