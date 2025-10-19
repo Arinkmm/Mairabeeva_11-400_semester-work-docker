@@ -1,7 +1,6 @@
 package com.racetalk.web.servlet;
 
 import com.racetalk.entity.Race;
-import com.racetalk.entity.User;
 import com.racetalk.service.RaceService;
 
 import javax.servlet.ServletException;
@@ -26,31 +25,11 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        if (session == null || session.getAttribute("user") == null) {
-            resp.sendRedirect(req.getContextPath() + "/index");
-        }
-
-        User user = (User) session.getAttribute("user");
-        req.setAttribute("user", user);
+        String username = (String) session.getAttribute("user");
+        req.setAttribute("user", username);
 
         List<Race> races = raceService.getUpcomingRaces();
         req.setAttribute("races", races);
-
-        String cookieUser = "";
-        String sessionId = session.getId();
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                if ("user".equalsIgnoreCase(c.getName())) {
-                    cookieUser = c.getValue();
-                } else if ("jsessionid".equalsIgnoreCase(c.getName())) {
-                    sessionId = c.getValue();
-                }
-            }
-        }
-
-        req.setAttribute("cookieUser", cookieUser);
-        req.setAttribute("sessionId", sessionId);
 
         req.getRequestDispatcher("/templates/main.ftl").forward(req, resp);
     }

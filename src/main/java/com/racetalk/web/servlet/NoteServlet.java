@@ -28,9 +28,6 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("user");
-        if (currentUser == null) {
-            resp.sendRedirect(req.getContextPath() + "/index");
-        }
 
         List<Note> notes = noteService.getUserNotes(currentUser);
         req.setAttribute("notes", notes);
@@ -41,16 +38,13 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("user");
-        if (currentUser == null) {
-            resp.sendRedirect(req.getContextPath() + "/index");
-        }
 
         String title = req.getParameter("title");
         String content = req.getParameter("content");
 
         if (title == null) {
             req.setAttribute("noteErrorMessage", "Заголовок не может быть пустым");
-            doGet(req, resp);
+            req.getRequestDispatcher("/templates/notes.ftl").forward(req, resp);
         }
 
         Note note = new Note();

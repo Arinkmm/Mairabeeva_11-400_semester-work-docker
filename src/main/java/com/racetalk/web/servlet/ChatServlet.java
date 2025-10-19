@@ -34,9 +34,6 @@ public class ChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("user");
-        if (currentUser == null) {
-            resp.sendRedirect(req.getContextPath() + "/index");
-        }
 
         List<ChatMessage> messages = chatMessageService.getAllMessages();
         resp.setContentType("application/json;charset=UTF-8");
@@ -55,10 +52,6 @@ public class ChatServlet extends HttpServlet {
         @Override
         protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             User currentUser = (User) req.getSession().getAttribute("user");
-            if (currentUser == null) {
-                resp.sendRedirect(req.getContextPath() + "/index");
-                return;
-            }
 
             String messageText = req.getParameter("message");
             if (messageText == null) {

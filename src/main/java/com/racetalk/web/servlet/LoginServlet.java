@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
         String usernameInput = req.getParameter("username");
         String passwordInput = req.getParameter("password");
 
-        if (!userService.loginUser(usernameInput, passwordInput).isEmpty()) {
+        if (userService.loginUser(usernameInput, passwordInput).isPresent()) {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", usernameInput);
             httpSession.setMaxInactiveInterval(60 * 60);
