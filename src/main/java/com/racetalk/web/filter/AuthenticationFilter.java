@@ -14,11 +14,11 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = "/*", filterName = "Authentication")
 public class AuthenticationFilter implements Filter {
-    private static final String[] excludedPaths = {"/login", "/sign_up"};
+    private static final String[] excludedPaths = {"/login", "/sign_up", "/", "/assets"};
 
     private boolean isExcluded(String path) {
         for (String exclude : excludedPaths) {
-            if (path.startsWith(exclude)) {
+            if (path.equals(exclude) || path.startsWith(exclude)) {
                 return true;
             }
         }
