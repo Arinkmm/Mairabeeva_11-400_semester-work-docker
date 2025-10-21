@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/RaceTalk_war/assets/css/index.css" rel="stylesheet" />
+    <link href="/RaceTalk_war/assets/css/race_talk.css" rel="stylesheet" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -24,7 +24,7 @@
         <form id="signup-form" method="post" action="/RaceTalk_war/sign_up" class="p-4 rounded shadow-sm" style="background:#fff; max-width:400px;">
             <div class="mb-3">
                 <label for="username" class="form-label fw-bold text-danger">Имя пользователя</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Придумайте логин" required />
+                <input type="text" class="form-control" id="username" name="username" placeholder="Придумайте имя" required />
                 <div id="username-feedback" class="text-danger fw-bold mt-2"></div>
             </div>
 

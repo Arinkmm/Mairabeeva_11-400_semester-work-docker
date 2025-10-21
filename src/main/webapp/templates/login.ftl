@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/RaceTalk_war/assets/css/index.css" rel="stylesheet" />
+    <link href="/RaceTalk_war/assets/css/race_talk.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -22,7 +22,7 @@
         <form id="loginForm" action="/RaceTalk_war/login" method="post" class="p-4 rounded shadow-sm" style="background:#fff; max-width:400px;">
             <div class="mb-3">
                 <label for="username" class="form-label fw-bold text-danger">Имя пользователя</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Ваш логин" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Ваше имя" required>
             </div>
             <div class="mb-4">
                 <label for="password" class="form-label fw-bold text-danger">Пароль</label>
