@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface RaceService {
     List<Race> getUpcomingRaces();
 
-    List<Race> getAll();
+    List<Race> getPastRaces();
 
-    Optional<Race> getById(int id);
+    Optional<Race> getPastRaceById(int id);
 }

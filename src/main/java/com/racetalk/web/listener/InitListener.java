@@ -59,7 +59,7 @@ public class InitListener implements ServletContextListener {
         RaceImportService raceImportService = new RaceImportServiceImpl(raceDao, raceResultDao, driverDao);
         context.setAttribute("raceImportService", raceImportService);
 
-        dataScheduler = new DataScheduler(raceImportService, 2025);
+        dataScheduler = new DataScheduler(raceImportService, databaseConnection, 2025);
         dataScheduler.start();
     }
 

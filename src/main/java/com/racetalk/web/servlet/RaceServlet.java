@@ -1,10 +1,7 @@
 package com.racetalk.web.servlet;
 
-import com.racetalk.dao.impl.RaceDaoImpl;
 import com.racetalk.entity.Race;
-import com.racetalk.service.RaceResultService;
 import com.racetalk.service.RaceService;
-import com.racetalk.service.impl.RaceServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +26,7 @@ public class RaceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Race> races = raceService.getAll();
+        List<Race> races = raceService.getPastRaces();
         req.setAttribute("races", races);
 
         req.getRequestDispatcher("/templates/races.ftl").forward(req, resp);

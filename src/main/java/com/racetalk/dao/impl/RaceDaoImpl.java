@@ -20,8 +20,8 @@ public class RaceDaoImpl implements RaceDao {
     }
 
     @Override
-    public void create(Race race) {
-        String sql = "INSERT INTO races (session_key, location, race_date, is_finished) VALUES (?, ?, ?, ?) RETURNING id";
+    public void createPastRace(Race race) {
+        String sql = "INSERT INTO past_races (session_key, location, race_date, is_finished) VALUES (?, ?, ?, ?) RETURNING id";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, race.getSessionKey());
@@ -40,8 +40,8 @@ public class RaceDaoImpl implements RaceDao {
 
 
     @Override
-    public void update(Race race) {
-        String sql = "UPDATE races SET session_key=?, location=?, race_date=?, is_finished=? WHERE id=?";
+    public void updatePastRace(Race race) {
+        String sql = "UPDATE past_races SET session_key=?, location=?, race_date=?, is_finished=? WHERE id=?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, race.getSessionKey());
@@ -57,8 +57,8 @@ public class RaceDaoImpl implements RaceDao {
 
 
     @Override
-    public boolean existsById(int id) {
-        String sql = "SELECT 1 FROM races WHERE id = ?";
+    public boolean existsPastRaceById(int id) {
+        String sql = "SELECT 1 FROM past_races WHERE id = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -71,7 +71,7 @@ public class RaceDaoImpl implements RaceDao {
 
     @Override
     public List<Race> findUpcomingRaces() {
-        String sql = "SELECT * FROM races WHERE race_date >= CURRENT_DATE ORDER BY race_date";
+        String sql = "SELECT * FROM upcoming_races";
         List<Race> races = new ArrayList<>();
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -79,7 +79,6 @@ public class RaceDaoImpl implements RaceDao {
             while (rs.next()) {
                 Race race = new Race();
                 race.setId(rs.getInt("id"));
-                race.setSessionKey(rs.getInt("session_key"));
                 race.setLocation(rs.getString("location"));
                 race.setRaceDate(rs.getDate("race_date").toLocalDate());
                 race.setFinished(rs.getBoolean("is_finished"));
@@ -92,8 +91,8 @@ public class RaceDaoImpl implements RaceDao {
     }
 
     @Override
-    public List<Race> findAll() {
-        String sql = "SELECT * FROM races";
+    public List<Race> findPastRaces() {
+        String sql = "SELECT * FROM past_races";
         List<Race> races = new ArrayList<>();
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -115,7 +114,7 @@ public class RaceDaoImpl implements RaceDao {
 
     @Override
     public Optional<Race> findBySessionKey(int sessionKey) {
-        String sql = "SELECT * FROM races WHERE session_key = ?";
+        String sql = "SELECT * FROM past_races WHERE session_key = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, sessionKey);
@@ -136,8 +135,8 @@ public class RaceDaoImpl implements RaceDao {
     }
 
     @Override
-    public Optional<Race> findById(int id) {
-        String sql = "SELECT * FROM races WHERE id = ?";
+    public Optional<Race> findPastRaceById(int id) {
+        String sql = "SELECT * FROM past_races WHERE id = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

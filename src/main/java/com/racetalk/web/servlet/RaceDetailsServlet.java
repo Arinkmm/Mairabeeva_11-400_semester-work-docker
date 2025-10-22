@@ -48,7 +48,7 @@ public class RaceDetailsServlet extends HttpServlet {
             return;
         }
 
-        Optional<Race> raceOptional = raceService.getById(raceId);
+        Optional<Race> raceOptional = raceService.getPastRaceById(raceId);
         if (raceOptional.isEmpty()) {
             req.setAttribute("errorMessage", "Race not found");
             req.setAttribute("errorCode", 404);

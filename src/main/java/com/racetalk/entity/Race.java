@@ -19,6 +19,13 @@ public class Race {
         this.isFinished = isFinished;
     }
 
+    public Race(int id, String location, LocalDate raceDate, boolean isFinished) {
+        this.id = id;
+        this.location = location;
+        this.raceDate = raceDate;
+        this.isFinished = isFinished;
+    }
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

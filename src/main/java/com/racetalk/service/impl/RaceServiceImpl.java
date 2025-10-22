@@ -20,12 +20,12 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
-    public List<Race> getAll() {
-        return raceDao.findAll();
+    public List<Race> getPastRaces() {
+        return raceDao.findPastRaces();
     }
 
     @Override
-    public Optional<Race> getById(int id) {
-        return raceDao.findById(id);
+    public Optional<Race> getPastRaceById(int id) {
+        return raceDao.findPastRaceById(id);
     }
 }

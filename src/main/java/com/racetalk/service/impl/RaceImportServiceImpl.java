@@ -100,10 +100,10 @@ public class RaceImportServiceImpl implements RaceImportService {
     }
 
     private void saveOrUpdateRace(Race race) {
-        if (raceDao.existsById(race.getId())) {
-            raceDao.update(race);
+        if (raceDao.existsPastRaceById(race.getId())) {
+            raceDao.updatePastRace(race);
         } else {
-            raceDao.create(race);
+            raceDao.createPastRace(race);
         }
     }
 
