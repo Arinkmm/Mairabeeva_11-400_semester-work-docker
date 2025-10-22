@@ -11,7 +11,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
-    <a class="navbar-brand" href="/RaceTalk_war/">RaceTalk</a>
+    <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
 </nav>
 
 <section class="hero d-flex justify-content-start align-items-center hero-login">
@@ -19,7 +19,7 @@
         <h1 class="hero-title">Вход</h1>
         <p class="hero-desc">Авторизуйтесь, чтобы вернуться в мир Формулы 1 и общаться с фанатами!</p>
 
-        <form id="loginForm" action="/RaceTalk_war/login" method="post" class="p-4 rounded shadow-sm login-form">
+        <form id="loginForm" action="${contextPath}/login" method="post" class="p-4 rounded shadow-sm login-form">
             <div class="mb-3">
                 <label for="username" class="form-label fw-bold text-danger">Имя пользователя</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Ваше имя" required>
@@ -32,7 +32,7 @@
                 <button type="submit" class="btn btn-main">Войти</button>
             </div>
             <p class="mt-3 text-muted">
-                Нет аккаунта? <a href="/RaceTalk_war/sign_up" class="text-danger fw-bold">Зарегистрируйтесь</a>
+                Нет аккаунта? <a href="${contextPath}/sign_up" class="text-danger fw-bold">Зарегистрируйтесь</a>
             </p>
 
             <#if LoginErrorMessage??>

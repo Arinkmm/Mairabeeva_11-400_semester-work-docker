@@ -11,15 +11,15 @@
 <body>
 
 <nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
-    <a class="navbar-brand" href="/RaceTalk_war/">RaceTalk</a>
+    <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <div class="navbar-nav">
-            <a class="nav-link" href="/RaceTalk_war/login">Войти</a>
-            <a class="nav-link" href="/RaceTalk_war/sign_up">Зарегистрироваться</a>
+            <a class="nav-link" href="${contextPath}/login">Войти</a>
+            <a class="nav-link" href="${contextPath}/sign_up">Зарегистрироваться</a>
         </div>
     </div>
 </nav>
@@ -28,7 +28,7 @@
     <div class="hero-content">
         <h1 class="hero-title">Добро пожаловать на RaceTalk</h1>
         <p class="hero-desc">Будь ближе к скорости и страсти Формулы 1 — свежая информация, расписание, обсуждение гонок и многое другое для настоящих фанатов</p>
-        <a href="/RaceTalk_war/sign_up" class="btn btn-main mt-2">Присоединиться</a>
+        <a href="${contextPath}/sign_up" class="btn btn-main mt-2">Присоединиться</a>
     </div>
 </section>
 

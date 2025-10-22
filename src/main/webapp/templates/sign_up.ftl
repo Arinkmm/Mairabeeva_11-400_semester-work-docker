@@ -12,7 +12,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
-    <a class="navbar-brand" href="/RaceTalk_war/">RaceTalk</a>
+    <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
 </nav>
 
 <section class="hero d-flex justify-content-start align-items-center hero-signup">
@@ -20,7 +20,7 @@
         <h1 class="hero-title">Регистрация</h1>
         <p class="hero-desc">Создайте аккаунт, чтобы присоединиться к сообществу фанатов Формулы-1!</p>
 
-        <form id="signup-form" method="post" action="/RaceTalk_war/sign_up" class="p-4 rounded shadow-sm signup-form">
+        <form id="signup-form" method="post" action="${contextPath}/sign_up" class="p-4 rounded shadow-sm signup-form">
             <div class="mb-3">
                 <label for="username" class="form-label fw-bold text-danger">Имя пользователя</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Придумайте имя" required />
@@ -38,7 +38,7 @@
             </div>
 
             <p class="mt-3 text-muted">
-                Уже есть аккаунт? <a href="/RaceTalk_war/login" class="text-danger fw-bold">Войдите</a>
+                Уже есть аккаунт? <a href="${contextPath}/login" class="text-danger fw-bold">Войдите</a>
             </p>
         </form>
     </div>

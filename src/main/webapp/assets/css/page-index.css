@@ -43,7 +43,7 @@ body {
 section.hero {
     position: relative;
     min-height: 70vh;
-    background: url('/RaceTalk_war/assets/images/background-page-index.jpg') no-repeat center center;
+    background: url('${contextPath}/assets/images/background-page-index.jpg') no-repeat center center;
     background-size: cover;
     background-blend-mode: lighten;
     margin-bottom: 3rem;

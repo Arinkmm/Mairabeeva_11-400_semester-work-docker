@@ -10,10 +10,10 @@
 <body>
 
 <nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
-    <a class="navbar-brand" href="/RaceTalk_war/">RaceTalk</a>
+    <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
     <div class="collapse navbar-collapse justify-content-end">
         <div class="navbar-nav">
-            <a class="nav-link text-danger fw-bold" href="/RaceTalk_war/logout">Выйти</a>
+            <a class="nav-link text-danger fw-bold" href="${contextPath}/logout">Выйти</a>
         </div>
     </div>
 </nav>
@@ -22,15 +22,15 @@
     <div class="hero-content">
         <h1 class="hero-title">Добро пожаловать, ${user}!</h1>
         <p class="hero-desc">Следите за предстоящими гонками Формулы 1 и обсуждайте их с сообществом фанатов</p>
-        <a href="/RaceTalk_war/chat" class="btn btn-main mt-2">Перейти в чат</a>
+        <a href="${contextPath}/chat" class="btn btn-main mt-2">Перейти в чат</a>
     </div>
 </section>
 
 <div class="links-section">
-    <a href="/RaceTalk_war/drivers" class="btn btn-link">Гонщики</a>
-    <a href="/RaceTalk_war/teams" class="btn btn-link">Команды</a>
-    <a href="/RaceTalk_war/races" class="btn btn-link">Прошедшие гонки</a>
-    <a href="/RaceTalk_war/notes" class="btn btn-link">Заметки</a>
+    <a href="${contextPath}/drivers" class="btn btn-link">Гонщики</a>
+    <a href="${contextPath}/teams" class="btn btn-link">Команды</a>
+    <a href="${contextPath}/races" class="btn btn-link">Прошедшие гонки</a>
+    <a href="${contextPath}/notes" class="btn btn-link">Заметки</a>
 </div>
 
 <main class="container my-5">

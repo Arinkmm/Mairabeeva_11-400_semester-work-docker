@@ -1,5 +1,5 @@
 $(function() {
-    const contextPath = '/RaceTalk_war';
+    const contextPath = $('#contextPath');
 
     $('#username').on('input', function() {
         let username = $(this).val();
