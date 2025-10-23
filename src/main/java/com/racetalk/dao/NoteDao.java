@@ -10,4 +10,6 @@ public interface NoteDao {
     void create(Note note);
 
     List<Note> findByUser(User user);
+
+    void deleteById(int id);
 }

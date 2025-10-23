@@ -23,4 +23,9 @@ public class NoteServiceImpl implements NoteService {
     public List<Note> getUserNotes(User user) {
         return noteDao.findByUser(user);
     }
+
+    @Override
+    public void deleteNote(int id) {
+        noteDao.deleteById(id);
+    }
 }

@@ -3,6 +3,7 @@ package com.racetalk.web.servlet;
 import com.racetalk.entity.Note;
 import com.racetalk.entity.User;
 import com.racetalk.service.NoteService;
+import com.racetalk.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,23 +13,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet("/notes")
 public class NoteServlet extends HttpServlet {
     private NoteService noteService;
+    private UserService userService;
 
     @Override
     public void init() {
         noteService = (NoteService) getServletContext().getAttribute("noteService");
+        userService = (UserService) getServletContext().getAttribute("userService");
         if (noteService == null) {
-            throw new IllegalStateException("NoteService not initialized");
+            throw new IllegalStateException("Services are not initialized");
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("user");
-
+        String currentUsername = (String) req.getSession().getAttribute("user");
+        Optional<User> currentUserOpt = userService.getByUsername(currentUsername);
+        User currentUser = currentUserOpt.get();
         List<Note> notes = noteService.getUserNotes(currentUser);
         req.setAttribute("notes", notes);
 
@@ -36,17 +41,22 @@ public class NoteServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("user");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String currentUsername = (String) req.getSession().getAttribute("user");
+        Optional<User> currentUserOpt = userService.getByUsername(currentUsername);
+        User currentUser = currentUserOpt.get();
+
+        String action = req.getParameter("action");
+
+        if ("delete".equals(action)) {
+            int noteId = Integer.parseInt(req.getParameter("noteId"));
+            noteService.deleteNote(noteId);
+            resp.sendRedirect(req.getContextPath() + "/notes");
+            return;
+        }
 
         String title = req.getParameter("title");
         String content = req.getParameter("content");
-
-        if (title == null || title.trim().isEmpty()) {
-            req.setAttribute("noteErrorMessage", "Заголовок не может быть пустым");
-            doGet(req, resp);
-            return;
-        }
 
         Note note = new Note();
         note.setUser(currentUser);

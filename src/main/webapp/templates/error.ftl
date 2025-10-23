@@ -16,7 +16,7 @@
 <main class="container text-center mt-5">
     <h1 class="display-3 text-danger">${statusCode!500}</h1>
     <p class="lead">${errorMessage!'Внутренняя ошибка сервера'}</p>
-    <a href="${contextPath}/main" class="btn btn-main mt-3">На главную</a>
+    <a href="${contextPath}/" class="btn btn-main mt-3">На главную</a>
 </main>
 
 <footer>

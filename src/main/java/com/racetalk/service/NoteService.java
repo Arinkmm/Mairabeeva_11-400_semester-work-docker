@@ -9,4 +9,6 @@ public interface NoteService {
     void addNote(Note note);
 
     List<Note> getUserNotes(User user);
+
+    void deleteNote(int id);
 }

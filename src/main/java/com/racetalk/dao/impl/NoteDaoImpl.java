@@ -54,4 +54,16 @@ public class NoteDaoImpl implements NoteDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void deleteById(int id) {
+        String sql = "DELETE FROM notes WHERE id = ?";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
