@@ -33,8 +33,8 @@ public class DriverProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
         if (pathInfo == null) {
-            req.setAttribute("errorMessage", "Driver number is missing");
-            req.setAttribute("errorCode", 400);
+            req.setAttribute("errorMessage", "Номер гонщика не найден");
+            req.setAttribute("statusCode", 400);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
             return;
         }
@@ -44,16 +44,16 @@ public class DriverProfileServlet extends HttpServlet {
         try {
             driverNumber = Integer.parseInt(driverNumberStr);
         } catch (NumberFormatException e) {
-            req.setAttribute("errorMessage", "Invalid Driver number format");
-            req.setAttribute("errorCode", 400);
+            req.setAttribute("errorMessage", "Неверный формат номера гонщика");
+            req.setAttribute("statusCode", 400);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
             return;
         }
 
         Optional<Driver> driverOptional = driverService.getByDriverNumber(driverNumber);
         if (driverOptional.isEmpty()) {
-            req.setAttribute("errorMessage", "Driver not found");
-            req.setAttribute("errorCode", 404);
+            req.setAttribute("errorMessage", "Гонщик не найден");
+            req.setAttribute("statusCode", 404);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
             return;
         }

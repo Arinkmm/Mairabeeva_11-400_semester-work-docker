@@ -32,7 +32,7 @@ public class RaceDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idInput = req.getParameter("id");
         if (idInput == null || idInput.trim().isEmpty()) {
-            req.setAttribute("errorMessage", "Race ID is missing");
+            req.setAttribute("errorMessage", "ID гонки не найден");
             req.setAttribute("errorCode", 400);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
             return;
@@ -42,7 +42,7 @@ public class RaceDetailsServlet extends HttpServlet {
         try {
             raceId = Integer.parseInt(idInput.trim());
         } catch (NumberFormatException e) {
-            req.setAttribute("errorMessage", "Invalid Race ID format");
+            req.setAttribute("errorMessage", "Неверный формат ID гонки");
             req.setAttribute("errorCode", 400);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
             return;
@@ -50,7 +50,7 @@ public class RaceDetailsServlet extends HttpServlet {
 
         Optional<Race> raceOptional = raceService.getPastRaceById(raceId);
         if (raceOptional.isEmpty()) {
-            req.setAttribute("errorMessage", "Race not found");
+            req.setAttribute("errorMessage", "Гонка не найдена");
             req.setAttribute("errorCode", 404);
             req.getRequestDispatcher("/templates/error.ftl").forward(req, resp);
             return;
