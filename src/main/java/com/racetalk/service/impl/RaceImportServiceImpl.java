@@ -16,8 +16,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 public class RaceImportServiceImpl implements RaceImportService {
@@ -39,40 +37,46 @@ public class RaceImportServiceImpl implements RaceImportService {
 
         try {
             String racesJson = sendGetRequest(racesUrl);
-            RaceDto[] racesArray = mapper.readValue(racesJson, RaceDto[].class);
-            List<RaceDto> races = Arrays.asList(racesArray);
+            RaceDto[] races = mapper.readValue(racesJson, RaceDto[].class);
 
             for (RaceDto raceDto : races) {
                 Optional<Race> existingRace = raceDao.findBySessionKey(raceDto.getSession_key());
 
-                Race race = existingRace.orElseGet(() -> {
-                    Race newRace = new Race();
-                    newRace.setSessionKey(raceDto.getSession_key());
-                    return newRace;
-                });
+                Race race = existingRace.orElseGet(Race::new);
 
+                race.setSessionKey(raceDto.getSession_key());
                 race.setLocation(raceDto.getCircuit_short_name());
                 race.setRaceDate(LocalDate.parse(raceDto.getDate_start().split("T")[0]));
                 race.setFinished(true);
-                saveOrUpdateRace(race);
+
+                if (existingRace.isPresent()) {
+                    raceDao.updatePastRace(race);
+                } else {
+                    raceDao.createPastRace(race);
+                }
 
                 String resultsUrl = "https://api.openf1.org/v1/session_result?session_key=" + raceDto.getSession_key();
                 String resultsJson = sendGetRequest(resultsUrl);
                 Thread.sleep(1000);
 
-                RaceResultDto[] resultsArray = mapper.readValue(resultsJson, RaceResultDto[].class);
-                List<RaceResultDto> results = Arrays.asList(resultsArray);
+                RaceResultDto[] results = mapper.readValue(resultsJson, RaceResultDto[].class);
 
                 for (RaceResultDto resDto : results) {
                     Driver driver = driverDao.findByDriverNumber(resDto.getDriver_number()).orElse(null);
 
-                    RaceResult result = new RaceResult();
+                    Optional<RaceResult> existingResult = raceResultDao.findResultsByRaceIdAndDriverNumber(race.getId(), driver.getDriverNumber());
+
+                    RaceResult result = existingResult.orElseGet(RaceResult::new);
                     result.setRace(race);
                     result.setDriver(driver);
                     result.setPosition(resDto.getPosition());
                     result.setPoints(resDto.getPoints());
 
-                    saveOrUpdateRaceResult(result);
+                    if (existingResult.isPresent()) {
+                        raceResultDao.update(result);
+                    } else {
+                        raceResultDao.create(result);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -96,22 +100,6 @@ public class RaceImportServiceImpl implements RaceImportService {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private void saveOrUpdateRace(Race race) {
-        if (raceDao.existsPastRaceById(race.getId())) {
-            raceDao.updatePastRace(race);
-        } else {
-            raceDao.createPastRace(race);
-        }
-    }
-
-    private void saveOrUpdateRaceResult(RaceResult result) {
-        if (raceResultDao.existsById(result.getId())) {
-            raceResultDao.update(result);
-        } else {
-            raceResultDao.create(result);
         }
     }
 }

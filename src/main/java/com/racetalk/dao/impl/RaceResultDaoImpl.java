@@ -56,13 +56,31 @@ public class RaceResultDaoImpl implements RaceResultDao {
     }
 
     @Override
-    public boolean existsById(int id) {
-        String sql = "SELECT 1 FROM race_results WHERE id = ?";
+    public List<RaceResult> findResultsByRaceId(int raceId) {
+        String sql = "SELECT * FROM race_results WHERE race_id = ? ORDER BY (position = 0), position";
+        List<RaceResult> results = new ArrayList<>();
+
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
+            ps.setInt(1, raceId);
             ResultSet rs = ps.executeQuery();
-            return rs.next();
+
+            while (rs.next()) {
+                RaceResult result = new RaceResult();
+                result.setId(rs.getInt("id"));
+
+                Race race = raceDao.findPastRaceById(raceId).orElse(null);
+                int driverNumber = rs.getInt("driver_number");
+                Driver driver = driverDao.findByDriverNumber(driverNumber).orElse(null);
+
+                result.setRace(race);
+                result.setDriver(driver);
+                result.setPosition(rs.getInt("position"));
+                result.setPoints(rs.getInt("points"));
+
+                results.add(result);
+            }
+            return results;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -70,26 +88,20 @@ public class RaceResultDaoImpl implements RaceResultDao {
 
     @Override
     public List<RaceResult> findResultsByDriverNumber(int driverNumber) {
-        String sql = "SELECT * FROM race_results WHERE driver_number = ?";
+        String sql = "SELECT * FROM race_results WHERE driver_number = ? ORDER BY race_id";
         List<RaceResult> results = new ArrayList<>();
+
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, driverNumber);
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 RaceResult result = new RaceResult();
                 result.setId(rs.getInt("id"));
 
-                Race race = raceDao.findPastRaces().stream()
-                        .filter(r -> {
-                            try {
-                                return r.getId() == rs.getInt("race_id");
-                            } catch (SQLException e) {
-                                throw new RuntimeException(e);
-                            }
-                        })
-                        .findFirst()
-                        .orElse(null);
+                int raceId = rs.getInt("race_id");
+                Race race = raceDao.findPastRaceById(raceId).orElse(null);
 
                 Driver driver = driverDao.findByDriverNumber(driverNumber).orElse(null);
 
@@ -97,6 +109,7 @@ public class RaceResultDaoImpl implements RaceResultDao {
                 result.setDriver(driver);
                 result.setPosition(rs.getInt("position"));
                 result.setPoints(rs.getInt("points"));
+
                 results.add(result);
             }
             return results;
@@ -105,34 +118,35 @@ public class RaceResultDaoImpl implements RaceResultDao {
         }
     }
 
+
     @Override
-    public List<RaceResult> findResultsByRaceId(int raceId) {
-        String sql = "SELECT * FROM race_results WHERE race_id = ?";
-        List<RaceResult> results = new ArrayList<>();
+    public Optional<RaceResult> findResultsByRaceIdAndDriverNumber(int raceId, int driverNumber) {
+        String sql = "SELECT * FROM race_results WHERE race_id = ? AND driver_number = ?";
+
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, raceId);
+            ps.setInt(2, driverNumber);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+
+            if (rs.next()) {
                 RaceResult result = new RaceResult();
                 result.setId(rs.getInt("id"));
-                Race race = raceDao.findPastRaces().stream()
-                        .filter(r -> r.getId() == raceId)
-                        .findFirst()
-                        .orElse(null);
 
-                Driver driver = driverDao.findByDriverNumber(rs.getInt("driver_number")).orElse(null);
+                Race race = raceDao.findPastRaceById(raceId).orElse(null);
+
+                Driver driver = driverDao.findByDriverNumber(driverNumber).orElse(null);
 
                 result.setRace(race);
                 result.setDriver(driver);
                 result.setPosition(rs.getInt("position"));
                 result.setPoints(rs.getInt("points"));
-                results.add(result);
+                return Optional.of(result);
+            } else {
+                return Optional.empty();
             }
-            return results;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 }

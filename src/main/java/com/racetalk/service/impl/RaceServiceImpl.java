@@ -4,6 +4,7 @@ import com.racetalk.dao.RaceDao;
 import com.racetalk.entity.Race;
 import com.racetalk.service.RaceService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,11 @@ public class RaceServiceImpl implements RaceService {
 
     public RaceServiceImpl(RaceDao raceDao) {
         this.raceDao = raceDao;
+    }
+
+    @Override
+    public void deleteUpcomingRacesByDate(LocalDate date) {
+        raceDao.deleteUpcomingRacesByDate(date);
     }
 
     @Override

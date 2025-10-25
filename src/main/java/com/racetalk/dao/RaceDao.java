@@ -2,6 +2,7 @@ package com.racetalk.dao;
 
 import com.racetalk.entity.Race;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +11,7 @@ public interface RaceDao {
 
     void updatePastRace(Race race);
 
-    boolean existsPastRaceById(int id);
+    void deleteUpcomingRacesByDate(LocalDate date);
 
     List<Race> findUpcomingRaces();
 

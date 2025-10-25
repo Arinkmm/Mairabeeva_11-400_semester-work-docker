@@ -22,5 +22,4 @@ public class RaceResultServiceImpl implements RaceResultService {
     public List<RaceResult> getResultsByRaceId(int raceId) {
         return raceResultDao.findResultsByRaceId(raceId);
     }
-
 }

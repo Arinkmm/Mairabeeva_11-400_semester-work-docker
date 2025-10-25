@@ -2,12 +2,11 @@ package com.racetalk.dao.impl;
 
 import com.racetalk.dao.RaceDao;
 import com.racetalk.entity.Race;
-import com.racetalk.entity.Team;
 import com.racetalk.util.DatabaseConnectionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,15 +54,13 @@ public class RaceDaoImpl implements RaceDao {
         }
     }
 
-
     @Override
-    public boolean existsPastRaceById(int id) {
-        String sql = "SELECT 1 FROM past_races WHERE id = ?";
+    public void deleteUpcomingRacesByDate(LocalDate date) {
+        String sql = "DELETE FROM upcoming_races WHERE race_date = ?";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
+            ps.setDate(1, Date.valueOf(date));
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +89,7 @@ public class RaceDaoImpl implements RaceDao {
 
     @Override
     public List<Race> findPastRaces() {
-        String sql = "SELECT * FROM past_races";
+        String sql = "SELECT * FROM past_races ORDER BY race_date";
         List<Race> races = new ArrayList<>();
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -147,7 +144,7 @@ public class RaceDaoImpl implements RaceDao {
                 race.setSessionKey(rs.getInt("session_key"));
                 race.setLocation(rs.getString("location"));
                 race.setRaceDate(rs.getDate("race_date").toLocalDate());
-                race.setFinished(rs.getBoolean("finished"));
+                race.setFinished(rs.getBoolean("is_finished"));
                 return Optional.of(race);
             }
             return Optional.empty();
