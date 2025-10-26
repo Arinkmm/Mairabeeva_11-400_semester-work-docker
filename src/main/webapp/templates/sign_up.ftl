@@ -49,7 +49,8 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/RaceTalk_war/assets/js/sign_up.js"></script>
+<script>const contextPath = '${contextPath}';</script>
+<script src="${contextPath}/assets/js/sign_up.js"></script>
 
 </body>
 </html>
