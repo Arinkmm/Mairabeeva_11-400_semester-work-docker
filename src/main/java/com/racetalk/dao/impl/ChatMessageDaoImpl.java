@@ -49,10 +49,8 @@ public class ChatMessageDaoImpl implements ChatMessageDao {
                 ChatMessage chatMessage = new ChatMessage();
                 chatMessage.setId(rs.getInt("id"));
                 int userId = rs.getInt("user_id");
-                if (!rs.wasNull()) {
-                    User user = userDao.findById(userId).orElse(null);
-                    chatMessage.setUser(user);
-                }
+                User user = userDao.findById(userId).orElse(null);
+                chatMessage.setUser(user);
                 chatMessage.setContent(rs.getString("content"));
                 chatMessage.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
                 chatMessages.add(chatMessage);
