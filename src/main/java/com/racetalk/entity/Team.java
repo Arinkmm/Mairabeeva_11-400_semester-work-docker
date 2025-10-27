@@ -5,20 +5,23 @@ public class Team {
     private String name;
     private String country;
     private int foundedYear;
+    private String photo;
 
     public Team() {}
 
-    public Team(int id, String name, String country, int foundedYear) {
+    public Team(int id, String name, String country, int foundedYear, String photo) {
         this.id = id;
         this.name = name;
         this.country = country;
         this.foundedYear = foundedYear;
+        this.photo = photo;
     }
 
-    public Team(String name, String country, int foundedYear) {
+    public Team(String name, String country, int foundedYear, String photo) {
         this.name = name;
         this.country = country;
         this.foundedYear = foundedYear;
+        this.photo = photo;
     }
 
     public int getId() { return id; }
@@ -32,4 +35,12 @@ public class Team {
 
     public int getFoundedYear() { return foundedYear; }
     public void setFoundedYear(int foundedYear) { this.foundedYear = foundedYear; }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 }

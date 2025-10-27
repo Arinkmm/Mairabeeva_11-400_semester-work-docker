@@ -18,12 +18,13 @@ public class TeamDaoImpl implements TeamDao {
 
     @Override
     public void create(Team team) {
-        String sql = "INSERT INTO teams (name, country, founded_year) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO teams (name, country, founded_year, photo) VALUES (?, ?, ?, ?)";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, team.getName());
             ps.setString(2, team.getCountry());
             ps.setInt(3, team.getFoundedYear());
+            ps.setString(4, team.getPhoto());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -43,6 +44,7 @@ public class TeamDaoImpl implements TeamDao {
                 team.setName(rs.getString("name"));
                 team.setCountry(rs.getString("country"));
                 team.setFoundedYear(rs.getInt("founded_year"));
+                team.setPhoto(rs.getString("photo"));
                 return Optional.of(team);
             }
             return Optional.empty();
@@ -53,7 +55,7 @@ public class TeamDaoImpl implements TeamDao {
 
     @Override
     public List<Team> findAll() {
-        String sql = "SELECT * FROM teams";
+        String sql = "SELECT * FROM teams ORDER BY id";
         List<Team> teams = new ArrayList<>();
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -64,6 +66,7 @@ public class TeamDaoImpl implements TeamDao {
                 team.setName(rs.getString("name"));
                 team.setCountry(rs.getString("country"));
                 team.setFoundedYear(rs.getInt("founded_year"));
+                team.setPhoto(rs.getString("photo"));
                 teams.add(team);
             }
             return teams;
