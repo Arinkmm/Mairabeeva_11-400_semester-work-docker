@@ -23,7 +23,7 @@
 
 <section class="hero d-flex align-items-center justify-content-start">
 
-    <img src="${contextPath}/assets/images/${driver.photo!'driver-default.jpg'}"
+    <img src="${contextPath}/assets/images/driver-profile/${driver.photo!'default.jpg'}"
          alt="${driver.firstName} ${driver.lastName}" class="driver-photo"/>
 
     <div class="hero-content">

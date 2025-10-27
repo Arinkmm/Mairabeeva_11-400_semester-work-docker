@@ -43,7 +43,7 @@ body {
 section.hero {
     position: relative;
     min-height: 70vh;
-    background: url('../images/background-page-index.jpg') no-repeat center center;
+    background: url('../images/background-page/index.png') no-repeat center center;
     background-size: cover;
     background-blend-mode: lighten;
     margin-bottom: 3rem;
