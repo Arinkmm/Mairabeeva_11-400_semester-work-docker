@@ -1,6 +1,9 @@
 package com.racetalk.web.servlet;
 
+import com.racetalk.exception.ServiceException;
 import com.racetalk.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +14,8 @@ import java.io.IOException;
 
 @WebServlet(name = "SignUp", urlPatterns = "/sign_up")
 public class SignUpServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(SignUpServlet.class);
+
     private UserService userService;
 
     @Override
@@ -27,12 +32,18 @@ public class SignUpServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        userService.registerUser(username, password);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        try {
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
+            userService.registerUser(username, password);
 
-        resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/login");
+        } catch (ServiceException e) {
+            logger.error("Registration failed", e);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            req.getRequestDispatcher("/error").forward(req, resp);
+        }
     }
 }
 

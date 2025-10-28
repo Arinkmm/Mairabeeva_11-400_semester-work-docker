@@ -1,7 +1,10 @@
 package com.racetalk.web.servlet;
 
 import com.racetalk.entity.Race;
+import com.racetalk.exception.ServiceException;
 import com.racetalk.service.RaceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +16,8 @@ import java.util.List;
 
 @WebServlet(name = "Races", urlPatterns = "/races")
 public class RaceServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(RaceServlet.class);
+
     private RaceService raceService;
 
     @Override
@@ -25,10 +30,15 @@ public class RaceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            List<Race> races = raceService.getPastRaces();
+            req.setAttribute("races", races);
 
-        List<Race> races = raceService.getPastRaces();
-        req.setAttribute("races", races);
-
-        req.getRequestDispatcher("/templates/races.ftl").forward(req, resp);
+            req.getRequestDispatcher("/templates/races.ftl").forward(req, resp);
+        } catch (ServiceException e) {
+            logger.error("Failed to load races", e);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            req.getRequestDispatcher("/error").forward(req, resp);
+        }
     }
 }
