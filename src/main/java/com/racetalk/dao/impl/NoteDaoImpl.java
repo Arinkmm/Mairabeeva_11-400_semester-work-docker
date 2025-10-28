@@ -1,16 +1,19 @@
 package com.racetalk.dao.impl;
 
 import com.racetalk.dao.NoteDao;
-import com.racetalk.dao.TeamDao;
 import com.racetalk.entity.Note;
 import com.racetalk.entity.User;
+import com.racetalk.exception.DataAccessException;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NoteDaoImpl implements NoteDao {
+    private static final Logger logger = LoggerFactory.getLogger(NoteDaoImpl.class);
     private final DatabaseConnectionUtil databaseConnection;
 
     public NoteDaoImpl(DatabaseConnectionUtil databaseConnection) {
@@ -28,7 +31,8 @@ public class NoteDaoImpl implements NoteDao {
             ps.setTimestamp(4, Timestamp.valueOf(note.getCreatedAt()));
             ps.executeUpdate();
             } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error creating note for user id {}", note.getUser().getId(), e);
+            throw new DataAccessException("Failed to create note", e);
         }
     }
 
@@ -51,7 +55,8 @@ public class NoteDaoImpl implements NoteDao {
                 }
             return notes;
             } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding notes for user id {}", user.getId(), e);
+            throw new DataAccessException("Failed to find notes by user", e);
         }
     }
 
@@ -63,7 +68,8 @@ public class NoteDaoImpl implements NoteDao {
             st.setInt(1, id);
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error deleting note id {}", id, e);
+            throw new DataAccessException("Failed to delete note by id", e);
         }
     }
 }

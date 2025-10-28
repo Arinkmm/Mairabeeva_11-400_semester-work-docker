@@ -2,12 +2,16 @@ package com.racetalk.dao.impl;
 
 import com.racetalk.dao.UserDao;
 import com.racetalk.entity.User;
+import com.racetalk.exception.DataAccessException;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
+    private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
     private final DatabaseConnectionUtil databaseConnection;
 
     public UserDaoImpl(DatabaseConnectionUtil databaseConnection) {
@@ -23,8 +27,8 @@ public class UserDaoImpl implements UserDao {
             ps.setString(2, user.getPassword());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            logger.error("Error creating user with username {}", user.getUsername(), e);
+            throw new DataAccessException("Failed to create user", e);        }
     }
 
     @Override
@@ -43,7 +47,8 @@ public class UserDaoImpl implements UserDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding user by username {}", username, e);
+            throw new DataAccessException("Failed to find user by username", e);
         }
     }
 
@@ -63,7 +68,8 @@ public class UserDaoImpl implements UserDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding user by id {}", id, e);
+            throw new DataAccessException("Failed to find user by id", e);
         }
     }
 }

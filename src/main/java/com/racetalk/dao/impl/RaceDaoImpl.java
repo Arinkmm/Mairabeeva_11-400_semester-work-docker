@@ -2,7 +2,10 @@ package com.racetalk.dao.impl;
 
 import com.racetalk.dao.RaceDao;
 import com.racetalk.entity.Race;
+import com.racetalk.exception.DataAccessException;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.sql.*;
@@ -12,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RaceDaoImpl implements RaceDao {
+    private static final Logger logger = LoggerFactory.getLogger(RaceDaoImpl.class);
     private final DatabaseConnectionUtil databaseConnection;
 
     public RaceDaoImpl(DatabaseConnectionUtil databaseConnection) {
@@ -33,7 +37,8 @@ public class RaceDaoImpl implements RaceDao {
                 race.setId(rs.getInt(1));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error creating past race: {}", race, e);
+            throw new DataAccessException("Failed to create past race", e);
         }
     }
 
@@ -50,7 +55,8 @@ public class RaceDaoImpl implements RaceDao {
             ps.setInt(5, race.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error updating past race id {}: {}", race.getId(), race, e);
+            throw new DataAccessException("Failed to update past race", e);
         }
     }
 
@@ -62,7 +68,8 @@ public class RaceDaoImpl implements RaceDao {
             ps.setDate(1, Date.valueOf(date));
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error deleting upcoming races by date {}", date, e);
+            throw new DataAccessException("Failed to delete upcoming races by date", e);
         }
     }
 
@@ -83,7 +90,8 @@ public class RaceDaoImpl implements RaceDao {
             }
             return races;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error retrieving upcoming races", e);
+            throw new DataAccessException("Failed to retrieve upcoming races", e);
         }
     }
 
@@ -105,7 +113,8 @@ public class RaceDaoImpl implements RaceDao {
             }
             return races;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error retrieving past races", e);
+            throw new DataAccessException("Failed to retrieve past races", e);
         }
     }
 
@@ -127,7 +136,8 @@ public class RaceDaoImpl implements RaceDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding race by session key {}", sessionKey, e);
+            throw new DataAccessException("Failed to find race by session key", e);
         }
     }
 
@@ -149,7 +159,8 @@ public class RaceDaoImpl implements RaceDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding race by id {}", id, e);
+            throw new DataAccessException("Failed to find race by id", e);
         }
     }
 }

@@ -2,7 +2,10 @@ package com.racetalk.dao.impl;
 
 import com.racetalk.dao.TeamDao;
 import com.racetalk.entity.Team;
+import com.racetalk.exception.DataAccessException;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TeamDaoImpl implements TeamDao {
+    private static final Logger logger = LoggerFactory.getLogger(TeamDaoImpl.class);
     private final DatabaseConnectionUtil databaseConnection;
 
     public TeamDaoImpl(DatabaseConnectionUtil databaseConnection) {
@@ -26,7 +30,8 @@ public class TeamDaoImpl implements TeamDao {
             ps.setString(4, team.getPhoto());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error creating team: {}", team, e);
+            throw new DataAccessException("Failed to create team", e);
         }
     }
 
@@ -51,7 +56,8 @@ public class TeamDaoImpl implements TeamDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding team by id {}", id, e);
+            throw new DataAccessException("Failed to find team by id", e);
         }
     }
 
@@ -76,7 +82,8 @@ public class TeamDaoImpl implements TeamDao {
             }
             return teams;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error retrieving all teams", e);
+            throw new DataAccessException("Failed to retrieve teams", e);
         }
     }
 }

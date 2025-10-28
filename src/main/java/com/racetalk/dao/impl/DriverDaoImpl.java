@@ -4,7 +4,10 @@ import com.racetalk.dao.DriverDao;
 import com.racetalk.dao.TeamDao;
 import com.racetalk.entity.Driver;
 import com.racetalk.entity.Team;
+import com.racetalk.exception.DataAccessException;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class DriverDaoImpl implements DriverDao {
+    private static final Logger logger = LoggerFactory.getLogger(DriverDaoImpl.class);
     private final DatabaseConnectionUtil databaseConnection;
     private final TeamDao teamDao;
 
@@ -38,7 +42,8 @@ public class DriverDaoImpl implements DriverDao {
             ps.setString(7, driver.getPhoto());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error creating driver with number {}", driver.getDriverNumber(), e);
+            throw new DataAccessException("Failed to create driver", e);
         }
     }
 
@@ -50,11 +55,31 @@ public class DriverDaoImpl implements DriverDao {
             ps.setInt(1, driverNumber);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return Optional.of(createDriverFromResultSet(rs));
+                Driver driver = new Driver();
+                driver.setDriverNumber(rs.getInt("driver_number"));
+
+                int teamId = rs.getInt("team_id");
+                Team team = teamDao.findById(teamId).orElse(null);
+                driver.setTeam(team);
+
+                driver.setFirstName(rs.getString("first_name"));
+                driver.setLastName(rs.getString("last_name"));
+
+                Date dob = rs.getDate("date_of_birth");
+                driver.setDateOfBirth(dob.toLocalDate());
+
+                driver.setCountry(rs.getString("country"));
+                if (!rs.wasNull()) {
+                    driver.setPhoto(rs.getString("photo"));
+                } else {
+                    driver.setPhoto(null);
+                }
+                return Optional.of(driver);
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding driver by number {}", driverNumber, e);
+            throw new DataAccessException("Failed to find driver by number", e);
         }
     }
 
@@ -66,11 +91,32 @@ public class DriverDaoImpl implements DriverDao {
             PreparedStatement ps = connection.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                drivers.add(createDriverFromResultSet(rs));
+                Driver driver = new Driver();
+                driver.setDriverNumber(rs.getInt("driver_number"));
+
+                int teamId = rs.getInt("team_id");
+                Team team = teamDao.findById(teamId).orElse(null);
+                driver.setTeam(team);
+
+                driver.setFirstName(rs.getString("first_name"));
+                driver.setLastName(rs.getString("last_name"));
+
+                Date dob = rs.getDate("date_of_birth");
+                driver.setDateOfBirth(dob.toLocalDate());
+
+                driver.setCountry(rs.getString("country"));
+                if (!rs.wasNull()) {
+                    driver.setPhoto(rs.getString("photo"));
+                } else {
+                    driver.setPhoto(null);
+                }
+
+                drivers.add(driver);
             }
             return drivers;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error retrieving all drivers", e);
+            throw new DataAccessException("Failed to retrieve all drivers", e);
         }
     }
 
@@ -83,37 +129,31 @@ public class DriverDaoImpl implements DriverDao {
             ps.setInt(1, teamId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                drivers.add(createDriverFromResultSet(rs));
+                Driver driver = new Driver();
+                driver.setDriverNumber(rs.getInt("driver_number"));
+
+                Team team = teamDao.findById(teamId).orElse(null);
+                driver.setTeam(team);
+
+                driver.setFirstName(rs.getString("first_name"));
+                driver.setLastName(rs.getString("last_name"));
+
+                Date dob = rs.getDate("date_of_birth");
+                driver.setDateOfBirth(dob.toLocalDate());
+
+                driver.setCountry(rs.getString("country"));
+                if (!rs.wasNull()) {
+                    driver.setPhoto(rs.getString("photo"));
+                } else {
+                    driver.setPhoto(null);
+                }
+
+                drivers.add(driver);
             }
             return drivers;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Driver createDriverFromResultSet(ResultSet rs) {
-        Driver driver = new Driver();
-        try {
-            driver.setDriverNumber(rs.getInt("driver_number"));
-            int teamId = rs.getInt("team_id");
-            Team team = teamDao.findById(teamId).orElse(null);
-            driver.setTeam(team);
-
-            driver.setFirstName(rs.getString("first_name"));
-            driver.setLastName(rs.getString("last_name"));
-
-            Date dob = rs.getDate("date_of_birth");
-            driver.setDateOfBirth(dob.toLocalDate());
-
-            driver.setCountry(rs.getString("country"));
-            if (!rs.wasNull()) {
-                driver.setPhoto(rs.getString("photo"));
-            } else {
-                driver.setPhoto(null);
-            }
-            return driver;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding drivers by team id {}", teamId, e);
+            throw new DataAccessException("Failed to find drivers by team ID", e);
         }
     }
 }

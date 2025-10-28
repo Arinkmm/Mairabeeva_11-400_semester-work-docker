@@ -8,7 +8,10 @@ import com.racetalk.entity.Driver;
 import com.racetalk.entity.Race;
 import com.racetalk.entity.RaceResult;
 import com.racetalk.entity.Team;
+import com.racetalk.exception.DataAccessException;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RaceResultDaoImpl implements RaceResultDao {
+    private static final Logger logger = LoggerFactory.getLogger(RaceResultDaoImpl.class);
     private final DatabaseConnectionUtil databaseConnection;
     private final RaceDao raceDao;
     private final DriverDao driverDao;
@@ -39,7 +43,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
             ps.setInt(4, result.getPoints());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error creating RaceResult for driver {} in race {}", result.getDriver().getDriverNumber(), result.getRace().getId(), e);
+            throw new DataAccessException("Failed to create RaceResult", e);
         }
     }
 
@@ -55,7 +60,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
             ps.setInt(5, result.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error updating RaceResult id {}", result.getId(), e);
+            throw new DataAccessException("Failed to update RaceResult", e);
         }
     }
 
@@ -86,7 +92,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
             }
             return results;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding results by raceId {}", raceId, e);
+            throw new DataAccessException("Failed to find results by raceId", e);
         }
     }
 
@@ -118,7 +125,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
             }
             return results;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding results by driverNumber {}", driverNumber, e);
+            throw new DataAccessException("Failed to find results by driverNumber", e);
         }
     }
 
@@ -150,7 +158,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
                 return Optional.empty();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding result by raceId {} and driverNumber {}", raceId, driverNumber, e);
+            throw new DataAccessException("Failed to find result by raceId and driverNumber", e);
         }
     }
 
@@ -197,7 +206,8 @@ public class RaceResultDaoImpl implements RaceResultDao {
             }
             return results;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error finding results by teamId {}", teamId, e);
+            throw new DataAccessException("Failed to find results by teamId", e);
         }
     }
 }

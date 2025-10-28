@@ -4,13 +4,17 @@ import com.racetalk.dao.ChatMessageDao;
 import com.racetalk.dao.UserDao;
 import com.racetalk.entity.ChatMessage;
 import com.racetalk.entity.User;
+import com.racetalk.exception.DataAccessException;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatMessageDaoImpl implements ChatMessageDao {
+    private static final Logger logger = LoggerFactory.getLogger(ChatMessageDaoImpl.class);
     private final DatabaseConnectionUtil databaseConnection;
     private final UserDao userDao;
 
@@ -25,12 +29,12 @@ public class ChatMessageDaoImpl implements ChatMessageDao {
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, chatMessage.getUser().getId());
-
             ps.setString(2, chatMessage.getContent());
             ps.setTimestamp(3, Timestamp.valueOf(chatMessage.getCreatedAt()));
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error creating chat message for user {}", chatMessage.getUser().getId(), e);
+            throw new DataAccessException("Failed to create chat message", e);
         }
     }
 
@@ -53,7 +57,8 @@ public class ChatMessageDaoImpl implements ChatMessageDao {
             }
             return chatMessages;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error reading chat messages", e);
+            throw new DataAccessException("Failed to fetch chat messages", e);
         }
     }
 }
