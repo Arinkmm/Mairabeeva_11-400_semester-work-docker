@@ -25,7 +25,7 @@ public class InitListener implements ServletContextListener {
         DriverDao driverDao = new DriverDaoImpl(databaseConnection, teamDao);
         RaceDao raceDao = new RaceDaoImpl(databaseConnection);
         ChatMessageDao chatMessageDao = new ChatMessageDaoImpl(databaseConnection, userDao);
-        RaceResultDao raceResultDao = new RaceResultDaoImpl(databaseConnection, raceDao, driverDao);
+        RaceResultDao raceResultDao = new RaceResultDaoImpl(databaseConnection, raceDao, driverDao, teamDao);
 
         ServletContext context = sce.getServletContext();
 

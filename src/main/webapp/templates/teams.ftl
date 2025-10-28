@@ -13,7 +13,7 @@
     <a class="navbar-brand" href="${contextPath}/main">RaceTalk</a>
 </nav>
 
-<section class="hero" role="banner">
+<section class="hero">
     <div>
         <h1 class="hero-title">Все команды</h1>
         <p class="hero-desc">Для просмотра статистики команды — нажмите</p>

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/error")
+@WebServlet(name = "ErrorHandler", urlPatterns = "/error")
 public class ErrorHandler extends HttpServlet {
     private static final Map<Integer, String> ERROR_MESSAGES = new HashMap<>();
 
