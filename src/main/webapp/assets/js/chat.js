@@ -28,9 +28,11 @@ $(document).ready(function() {
                 renderMessage({
                     username: data.username,
                     content: text,
-                    createdAt: new Date().toISOString()
+                    createdAt: data.createdAt
                 });
                 $('#messageInput').val('');
+            } else {
+                alert(data.message);
             }
         }, 'json');
     });
