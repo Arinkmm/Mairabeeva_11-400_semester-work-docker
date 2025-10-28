@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = "/*", filterName = "Authentication")
 public class AuthenticationFilter implements Filter {
-    private static final String[] excludedPaths = {"/login", "/sign_up", "/assets/"};
+    private static final String[] excludedPaths = {"/login", "/sign_up", "/index", "/assets/"};
     private static final String rootPath = "/";
 
     private boolean isExcluded(String path) {

@@ -5,6 +5,8 @@ import com.racetalk.dao.impl.*;
 import com.racetalk.service.*;
 import com.racetalk.service.impl.*;
 import com.racetalk.util.DatabaseConnectionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -13,6 +15,8 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class InitListener implements ServletContextListener {
+    private final Logger logger = LoggerFactory.getLogger(InitListener.class);
+
     private ImportCleanupService importCleanupService;
 
     @Override
@@ -57,6 +61,10 @@ public class InitListener implements ServletContextListener {
         context.setAttribute("raceImportService", raceImportService);
 
         importCleanupService = new ImportCleanupService(raceImportService, raceService, 2025);
-        importCleanupService.initialize();
+        try {
+            importCleanupService.initialize();
+        } catch (Exception e) {
+            logger.error("Failed during import and cleanup initialization", e);
+        }
     }
 }

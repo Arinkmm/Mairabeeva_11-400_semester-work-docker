@@ -9,7 +9,10 @@ import com.racetalk.entity.Driver;
 import com.racetalk.entity.Race;
 import com.racetalk.entity.RaceResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.racetalk.exception.ServiceException;
 import com.racetalk.service.RaceImportService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,6 +22,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public class RaceImportServiceImpl implements RaceImportService {
+    private static final Logger logger = LoggerFactory.getLogger(RaceImportServiceImpl.class);
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final RaceDao raceDao;
@@ -80,7 +84,8 @@ public class RaceImportServiceImpl implements RaceImportService {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error("Error importing season races and results for year {}", year, e);
+            throw new ServiceException("Failed to import season data", e);
         }
     }
 
@@ -99,7 +104,8 @@ public class RaceImportServiceImpl implements RaceImportService {
                 return response.toString();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error("Error sending GET request to URL: {}", url, e);
+            throw new ServiceException("Failed to send GET request to external API", e);
         }
     }
 }

@@ -2,11 +2,15 @@ package com.racetalk.util;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseConnectionUtil{
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseConnectionUtil.class);
+
     private static DatabaseConnectionUtil instance;
     private HikariDataSource ds;
 
@@ -39,7 +43,8 @@ public class DatabaseConnectionUtil{
         try {
             return ds.getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Failed to get database connection", e);
+            throw new RuntimeException("Database connection failure", e);
         }
     }
 }
