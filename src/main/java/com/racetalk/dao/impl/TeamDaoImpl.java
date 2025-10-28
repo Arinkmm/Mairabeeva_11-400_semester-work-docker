@@ -23,7 +23,6 @@ public class TeamDaoImpl implements TeamDao {
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, team.getName());
             ps.setString(2, team.getCountry());
-            ps.setInt(3, team.getFoundedYear());
             ps.setString(4, team.getPhoto());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -43,7 +42,6 @@ public class TeamDaoImpl implements TeamDao {
                 team.setId(rs.getInt("id"));
                 team.setName(rs.getString("name"));
                 team.setCountry(rs.getString("country"));
-                team.setFoundedYear(rs.getInt("founded_year"));
                 if (!rs.wasNull()) {
                     team.setPhoto(rs.getString("photo"));
                 } else {
@@ -69,7 +67,6 @@ public class TeamDaoImpl implements TeamDao {
                 team.setId(rs.getInt("id"));
                 team.setName(rs.getString("name"));
                 team.setCountry(rs.getString("country"));
-                team.setFoundedYear(rs.getInt("founded_year"));
                 if (!rs.wasNull()) {
                     team.setPhoto(rs.getString("photo"));
                 } else {
