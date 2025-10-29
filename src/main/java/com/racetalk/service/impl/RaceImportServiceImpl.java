@@ -37,7 +37,7 @@ public class RaceImportServiceImpl implements RaceImportService {
 
     @Override
     public void importSeasonRacesAndResults(int year) {
-        String racesUrl = "https://api.openf1.org/v1/sessions?year=" + year + "&session_name=Race";
+        String racesUrl = System.getenv("RACES_IMPORT_URL") + year + System.getenv("RACES_IMPORT_URL_PARAMETER");
 
         try {
             String racesJson = sendGetRequest(racesUrl);
@@ -59,7 +59,7 @@ public class RaceImportServiceImpl implements RaceImportService {
                     raceDao.createPastRace(race);
                 }
 
-                String resultsUrl = "https://api.openf1.org/v1/session_result?session_key=" + raceDto.getSession_key();
+                String resultsUrl = System.getenv("RACE_RESULTS_IMPORT_URL") + raceDto.getSession_key();
                 String resultsJson = sendGetRequest(resultsUrl);
                 Thread.sleep(1000);
 

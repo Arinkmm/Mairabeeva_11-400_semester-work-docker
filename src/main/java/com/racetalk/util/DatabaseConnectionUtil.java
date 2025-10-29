@@ -17,9 +17,9 @@ public class DatabaseConnectionUtil{
     private DatabaseConnectionUtil() {
         HikariConfig config = new HikariConfig();
 
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/racetalk_db");
-        config.setUsername("postgres");
-        config.setPassword("08122006Ar");
+        config.setJdbcUrl(System.getenv("DATABASE_CONNECTION_URL"));
+        config.setUsername(System.getenv("DATABASE_CONNECTION_USERNAME"));
+        config.setPassword(System.getenv("DATABASE_CONNECTION_PASSWORD"));
         config.setDriverClassName("org.postgresql.Driver");
 
         config.setMaximumPoolSize(25);
