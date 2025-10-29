@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <title>RaceTalk</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/style.css" rel="stylesheet" />
     <link href="${contextPath}/assets/css/page-index.css" rel="stylesheet" />
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
+<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3">
     <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-end">
         <div class="navbar-nav">
             <a class="nav-link" href="${contextPath}/login">Войти</a>
             <a class="nav-link" href="${contextPath}/sign_up">Зарегистрироваться</a>

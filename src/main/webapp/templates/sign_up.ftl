@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8" />
     <title>RaceTalk — Регистрация</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/RaceTalk_war/assets/css/page-sign_up.css" rel="stylesheet" />
-
+    <link href="${contextPath}/assets/css/style.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/page-sign_up.css" rel="stylesheet" />
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
+<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3">
     <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
 </nav>
 
-<section class="hero d-flex justify-content-start align-items-center hero-signup">
+<section class="hero d-flex justify-content-start align-items-center hero-login">
     <div class="hero-content">
         <h1 class="hero-title">Регистрация</h1>
         <p class="hero-desc">Создайте аккаунт, чтобы присоединиться к сообществу фанатов Формулы-1!</p>
 
-        <form id="signup-form" method="post" action="${contextPath}/sign_up" class="p-4 rounded shadow-sm signup-form">
+        <form id="signup-form" method="post" action="${contextPath}/sign_up" class="p-4 rounded shadow-sm login-form">
             <div class="mb-3">
                 <label for="username" class="form-label fw-bold text-danger">Имя пользователя</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Придумайте имя" required />
@@ -34,7 +32,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="btn btn-main">Зарегистрироваться</button>
+                <button type="submit" id="signup-button" class="btn btn-main">Зарегистрироваться</button>
             </div>
 
             <p class="mt-3 text-muted">

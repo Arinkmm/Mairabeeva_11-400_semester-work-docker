@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <title>RaceTalk — Прошедшие гонки</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/style.css" rel="stylesheet" />
     <link href="${contextPath}/assets/css/page-races.css" rel="stylesheet" />
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
+<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3">
     <a class="navbar-brand" href="${contextPath}/main">RaceTalk</a>
 </nav>
 
@@ -20,8 +20,8 @@
         <p class="hero-desc">Для просмотра полных результатов гонки — нажмите</p>
     </div>
 <main class="container my-4">
-    <div class="table-responsive rounded shadow-sm">
-        <table class="table race-table table-striped align-middle">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm">
             <thead class="table-danger">
             <tr>
                 <th scope="col">Место проведения</th>

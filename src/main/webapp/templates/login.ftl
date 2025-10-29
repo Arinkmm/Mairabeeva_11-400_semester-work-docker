@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <title>RaceTalk — Вход</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/RaceTalk_war/assets/css/page-login.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/style.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/page-login.css" rel="stylesheet" />
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
+<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3">
     <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
 </nav>
 
@@ -19,14 +18,14 @@
         <h1 class="hero-title">Вход</h1>
         <p class="hero-desc">Авторизуйтесь, чтобы вернуться в мир Формулы 1 и общаться с фанатами!</p>
 
-        <form id="loginForm" action="${contextPath}/login" method="post" class="p-4 rounded shadow-sm login-form">
+        <form action="${contextPath}/login" method="post" class="p-4 rounded shadow-sm login-form">
             <div class="mb-3">
                 <label for="username" class="form-label fw-bold text-danger">Имя пользователя</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Ваше имя" required>
+                <input type="text" class="form-control" id = "username" name="username" placeholder="Ваше имя" required>
             </div>
             <div class="mb-4">
                 <label for="password" class="form-label fw-bold text-danger">Пароль</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль" required>
+                <input type="password" class="form-control" id = "password" name="password" placeholder="Введите пароль" required>
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-main">Войти</button>
@@ -36,9 +35,9 @@
             </p>
 
             <#if LoginErrorMessage??>
-                <div id="loginError" class="text-danger fw-bold mt-3">${LoginErrorMessage}</div>
+                <div class="text-danger fw-bold mt-3">${LoginErrorMessage}</div>
             <#else>
-                <div id="loginError" class="text-danger fw-bold mt-3 hidden"></div>
+                <div class="text-danger fw-bold mt-3 hidden"></div>
             </#if>
         </form>
     </div>

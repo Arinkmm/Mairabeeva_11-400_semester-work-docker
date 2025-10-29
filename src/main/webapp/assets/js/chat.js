@@ -22,7 +22,6 @@ $(document).ready(function() {
     $('#chatForm').submit(function(e) {
         e.preventDefault();
         var text = $('#messageInput').val().trim();
-        if (!text) return;
         $.post(contextPath + '/chat/handle', {message: text}, function(data) {
             if (data.success) {
                 renderMessage({

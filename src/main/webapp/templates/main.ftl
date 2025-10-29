@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <title>RaceTalk — Главная</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/style.css" rel="stylesheet" />
     <link href="${contextPath}/assets/css/page-main.css" rel="stylesheet" />
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
+<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3">
     <a class="navbar-brand" href="${contextPath}/main">RaceTalk</a>
     <div class="collapse navbar-collapse justify-content-end">
         <div class="navbar-nav">
@@ -35,10 +35,7 @@
 
 <main class="container my-5">
     <h2 class="section-title mb-4">Предстоящие гонки</h2>
-
-    <#if races?size == 0>
-        <p class="text-muted">Нет запланированных гонок</p>
-    <#else>
+    <#if races?? && races?size gt 0>
         <div class="table-responsive">
             <table class="table table-hover align-middle shadow-sm">
                 <thead class="table-danger">
@@ -58,6 +55,8 @@
                 </tbody>
             </table>
         </div>
+    <#else>
+    <p class="text-muted">Нет запланированных гонок</p>
     </#if>
 </main>
 

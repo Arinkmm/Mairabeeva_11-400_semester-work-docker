@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>RaceTalk — Профиль и результаты пилота | ${driver.firstName} ${driver.lastName}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/style.css" rel="stylesheet" />
     <link href="${contextPath}/assets/css/page-driver_profile.css" rel="stylesheet" />
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3" aria-label="Главное меню">
+<nav class="navbar navbar-expand-md sticky-top shadow-sm px-3">
     <a class="navbar-brand" href="${contextPath}/">RaceTalk</a>
     <div class="collapse navbar-collapse justify-content-end">
         <div class="navbar-nav">
-            <a class="nav-link text-danger fw-bold d-flex align-items-center" href="${contextPath}/drivers" role="button" aria-label="Назад">
+            <a class="nav-link text-danger fw-bold d-flex align-items-center" href="${contextPath}/drivers" role="button">
                 &#8592;
                 <span class="ms-2">Назад</span>
             </a>
@@ -22,31 +22,22 @@
 </nav>
 
 <section class="hero d-flex align-items-center justify-content-start">
-
-    <img src="${contextPath}/assets/images/driver-profile/${driver.photo!'default.jpg'}"
-         alt="${driver.firstName} ${driver.lastName}" class="driver-photo"/>
-
+    <img src="${contextPath}/assets/images/driver-profile/${driver.photo!'default.jpg'}" class="driver-photo"/>
     <div class="hero-content">
         <h1 class="hero-title">
             Пилот №${driver.driverNumber}: ${driver.firstName} ${driver.lastName}
         </h1>
-        <p><strong>Команда:</strong> ${driver.team.name!'—'}</p>
-        <p><strong>Национальность:</strong> ${driver.country!'—'}</p>
+        <p><strong>Команда:</strong> ${driver.team.name}</p>
+        <p><strong>Национальность:</strong> ${driver.country}</p>
         <p><strong>Дата рождения:</strong>
-            <#if driver.dateOfBirth??>
-                <#assign dobDate = driver.dateOfBirth?date("yyyy-MM-dd")>
-                ${dobDate?string("dd.MM.yyyy")}
-            <#else>
-                —
-            </#if>
+            <#assign dobDate = driver.dateOfBirth?date("yyyy-MM-dd")>
+            ${dobDate?string("dd.MM.yyyy")}
         </p>
     </div>
 </section>
 
-
 <main class="container my-5">
     <h2 class="section-title mb-4">Результаты гонок</h2>
-
     <#if raceResults?? && raceResults?size &gt; 0>
         <div class="table-responsive">
             <table class="table table-hover align-middle shadow-sm">
@@ -62,7 +53,7 @@
                 <tbody>
                 <#list raceResults as r>
                     <tr>
-                        <td>${r.race.location!'—'}</td>
+                        <td>${r.race.location}</td>
                         <#assign rDate = r.race.raceDate?date("yyyy-MM-dd")>
                         <td>${rDate?string("dd.MM.yyyy")}</td>
                         <td>
