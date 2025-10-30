@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface NoteService {
     void addNote(Note note);
 
-    void updateNote(Note note);
+    void editNote(Note note);
 
     void deleteNote(int id);
 

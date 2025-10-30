@@ -31,12 +31,12 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void updateNote(Note note) {
+    public void editNote(Note note) {
         try {
             noteDao.update(note);
         } catch (DataAccessException e) {
-            logger.error("Failed to update note for user {}", note.getUser().getId(), e);
-            throw new ServiceException("Failed to update note", e);
+            logger.error("Failed to edit note for user {}", note.getUser().getId(), e);
+            throw new ServiceException("Failed to edit note", e);
         }
     }
 
