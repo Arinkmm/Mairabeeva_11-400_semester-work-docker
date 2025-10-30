@@ -20,12 +20,12 @@
 
         <form action="${contextPath}/login" method="post" class="p-4 rounded shadow-sm login-form">
             <div class="mb-3">
-                <label for="username" class="form-label fw-bold text-danger">Имя пользователя</label>
-                <input type="text" class="form-control" id = "username" name="username" placeholder="Ваше имя" required>
+                <label class="form-label fw-bold text-danger">Имя пользователя</label>
+                <input type="text" class="form-control" name="username" placeholder="Ваше имя" required>
             </div>
             <div class="mb-4">
-                <label for="password" class="form-label fw-bold text-danger">Пароль</label>
-                <input type="password" class="form-control" id = "password" name="password" placeholder="Введите пароль" required>
+                <label class="form-label fw-bold text-danger">Пароль</label>
+                <input type="password" class="form-control" name="password" placeholder="Введите пароль" required>
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-main">Войти</button>
