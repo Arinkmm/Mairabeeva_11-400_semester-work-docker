@@ -19,12 +19,12 @@
     <form method="POST" action="${contextPath}/notes" class="mb-5 p-4 border rounded shadow-sm bg-light">
         <h4 class="mb-3 text-danger">Добавить новую заметку</h4>
         <div class="mb-3">
-            <label for="title" class="form-label fw-bold">Заголовок</label>
-            <input type="text" id="title" name="title" class="form-control" placeholder="Введите заголовок заметки" required />
+            <label class="form-label fw-bold">Заголовок</label>
+            <input type="text" name="title" class="form-control" placeholder="Введите заголовок" required />
         </div>
         <div class="mb-3">
-            <label for="content" class="form-label fw-bold">Содержание</label>
-            <textarea id="content" name="content" class="form-control" rows="4" placeholder="Введите текст заметки"></textarea>
+            <label class="form-label fw-bold">Содержание</label>
+            <textarea name="content" class="form-control" rows="4" placeholder="Введите текст заметки"></textarea>
         </div>
         <button type="submit" class="btn btn-main">Добавить заметку</button>
     </form>
@@ -42,13 +42,18 @@
                             </#if>
                         </small>
                     </div>
-                    <form method="POST" action="${contextPath}/notes">
-                        <input type="hidden" name="action" value="delete" />
-                        <input type="hidden" name="noteId" value="${note.id}" />
-                        <button type="submit" class="btn btn-outline-danger btn-sm">
-                            ✕ Удалить
-                        </button>
-                    </form>
+                    <div class="d-flex gap-2">
+                        <form action="${contextPath}/notes/edit" method="GET">
+                            <input type="hidden" name="action" value="edit" />
+                            <input type="hidden" name="noteId" value="${note.id}" />
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Редактировать</button>
+                        </form>
+                        <form method="POST" action="${contextPath}/notes">
+                            <input type="hidden" name="action" value="delete" />
+                            <input type="hidden" name="noteId" value="${note.id}" />
+                            <button type="submit" class="btn btn-outline-danger btn-sm">✕ Удалить</button>
+                        </form>
+                    </div>
                 </div>
             </#list>
         </div>

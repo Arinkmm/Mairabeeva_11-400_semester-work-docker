@@ -67,6 +67,21 @@ public class NoteServlet extends HttpServlet {
                 return;
             }
 
+            if ("edit".equals(action)) {
+                int noteId = Integer.parseInt(req.getParameter("noteId"));
+                String title = req.getParameter("title");
+                String content = req.getParameter("content");
+                Optional<Note> noteOpt = noteService.getById(noteId);
+                if (noteOpt.isPresent()) {
+                    Note note = noteOpt.get();
+                    note.setTitle(title);
+                    note.setContent(content);
+                    noteService.editNote(note);
+                }
+                resp.sendRedirect(req.getContextPath() + "/notes");
+                return;
+            }
+
             String title = req.getParameter("title");
             String content = req.getParameter("content");
 
