@@ -33,7 +33,7 @@
 
         <div class="mb-3">
             <label class="form-label fw-bold">Содержание</label>
-            <textarea name="content" class="form-control" rows="4" required>${note.content}</textarea>
+            <textarea name="content" class="form-control" rows="4">${note.content}</textarea>
         </div>
 
         <button type="submit" class="btn btn-main">Сохранить изменения</button>
