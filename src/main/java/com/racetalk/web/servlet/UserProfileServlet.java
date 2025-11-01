@@ -100,12 +100,12 @@ public class UserProfileServlet extends HttpServlet {
                     req.getRequestDispatcher("/templates/user_edit.ftl").forward(req, resp);
                     return;
                 }
-                if (!PasswordValidator.isValid(newPassword)) {
+                if (!userService.validatePassword(newPassword)) {
                     req.setAttribute("EditErrorMessage", "Пароль не соответствует требованиям");
                     req.getRequestDispatcher("/templates/user_edit.ftl").forward(req, resp);
                     return;
                 }
-                currentUser.setPassword(PasswordHasherUtil.hashPassword(newPassword));
+                currentUser.setPassword(userService.hashPassword(newPassword));
             }
 
             currentUser.setUsername(username);

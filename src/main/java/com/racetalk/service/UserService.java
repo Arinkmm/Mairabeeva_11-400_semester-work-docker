@@ -1,6 +1,7 @@
 package com.racetalk.service;
 
 import com.racetalk.entity.User;
+import com.racetalk.entity.UserRole;
 
 import java.io.InputStream;
 import java.util.Optional;
@@ -18,4 +19,9 @@ public interface UserService {
 
     boolean verifyPassword(User user, String password);
 
-    }
+    boolean validatePassword(String password);
+
+    String hashPassword(String password);
+
+    boolean validateUsername(String username);
+}

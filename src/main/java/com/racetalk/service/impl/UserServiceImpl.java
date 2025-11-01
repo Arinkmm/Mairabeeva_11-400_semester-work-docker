@@ -1,13 +1,15 @@
 package com.racetalk.service.impl;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.racetalk.dao.UserDao;
 import com.racetalk.entity.User;
+import com.racetalk.entity.UserRole;
 import com.racetalk.exception.DataAccessException;
 import com.racetalk.exception.ServiceException;
 import com.racetalk.service.UserService;
 import com.racetalk.util.PasswordHasherUtil;
+import com.racetalk.util.PasswordValidator;
+import com.racetalk.util.UsernameValidator;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +32,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(String username, String password) {
         String hashedPassword = PasswordHasherUtil.hashPassword(password);
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(hashedPassword);
+        user.setRole(UserRole.USER);
         try {
-            userDao.create(new User(username, hashedPassword));
+            userDao.create(user);
         } catch (DataAccessException e) {
             logger.error("Failed to register user {}", username, e);
             throw new ServiceException("Registration failed", e);
@@ -96,6 +102,24 @@ public class UserServiceImpl implements UserService {
         if (hashedPassword == null) {
             return false;
         }
-        return BCrypt.checkpw(password, hashedPassword);
+        return PasswordHasherUtil.checkPassword(password, hashedPassword);
     }
+
+
+    @Override
+    public boolean validatePassword(String password) {
+        return PasswordValidator.isValid(password);
+    }
+
+    @Override
+    public String hashPassword(String password) {
+        return PasswordHasherUtil.hashPassword(password);
+    }
+
+    @Override
+    public boolean validateUsername(String username) {
+        return UsernameValidator.isValid(username);
+    }
+
+
 }
