@@ -41,19 +41,19 @@ public class AuthenticationFilter implements Filter {
         } else {
             HttpSession session = req.getSession(false);
 
-            if (session == null || session.getAttribute("user") == null) {
-                String usernameFromCookie = null;
+            if (session == null || session.getAttribute("userId") == null) {
+                String userIdFromCookie = null;
                 if (req.getCookies() != null) {
                     for (Cookie cookie : req.getCookies()) {
-                        if ("user".equals(cookie.getName())) {
-                            usernameFromCookie = cookie.getValue();
+                        if ("userId".equals(cookie.getName())) {
+                            userIdFromCookie = cookie.getValue();
                             break;
                         }
                     }
                 }
-                if (usernameFromCookie != null) {
+                if (userIdFromCookie != null) {
                     session = req.getSession(true);
-                    session.setAttribute("user", usernameFromCookie);
+                    session.setAttribute("userId", userIdFromCookie);
                     chain.doFilter(request, response);
                 } else {
                     res.sendRedirect(req.getContextPath() + "/login");

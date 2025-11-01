@@ -63,8 +63,8 @@ public class ChatHandler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            String currentUsername = (String) req.getSession().getAttribute("user");
-            Optional<User> currentUserOpt = userService.getByUsername(currentUsername);
+            int currentUserId = (int) req.getSession().getAttribute("userId");
+            Optional<User> currentUserOpt = userService.getById(currentUserId);
             User currentUser = currentUserOpt.get();
 
             String messageText = req.getParameter("message");

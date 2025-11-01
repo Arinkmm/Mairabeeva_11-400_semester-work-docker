@@ -1,5 +1,6 @@
 package com.racetalk.web.servlet;
 
+import com.racetalk.entity.User;
 import com.racetalk.exception.ServiceException;
 import com.racetalk.service.UserService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(name = "Login", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
@@ -35,12 +37,15 @@ public class LoginServlet extends HttpServlet {
             String usernameInput = req.getParameter("username");
             String passwordInput = req.getParameter("password");
 
-            if (userService.loginUser(usernameInput, passwordInput).isPresent()) {
+            Optional<User> userOpt = userService.loginUser(usernameInput, passwordInput);
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
+
                 HttpSession httpSession = req.getSession();
-                httpSession.setAttribute("user", usernameInput);
+                httpSession.setAttribute("userId", user.getId());
                 httpSession.setMaxInactiveInterval(60 * 60);
 
-                Cookie cookie = new Cookie("user", usernameInput);
+                Cookie cookie = new Cookie("userId", String.valueOf(user.getId()));
                 cookie.setMaxAge(24 * 60 * 60);
 
                 resp.addCookie(cookie);
