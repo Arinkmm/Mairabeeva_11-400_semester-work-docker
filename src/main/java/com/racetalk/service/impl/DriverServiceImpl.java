@@ -1,5 +1,6 @@
 package com.racetalk.service.impl;
 
+import com.cloudinary.Cloudinary;
 import com.racetalk.dao.DriverDao;
 import com.racetalk.entity.Driver;
 import com.racetalk.exception.DataAccessException;
@@ -8,15 +9,39 @@ import com.racetalk.service.DriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class DriverServiceImpl implements DriverService {
     private static final Logger logger = LoggerFactory.getLogger(DriverServiceImpl.class);
     private final DriverDao driverDao;
+    private final Cloudinary cloudinary;
 
-    public DriverServiceImpl(DriverDao driverDao) {
+
+    public DriverServiceImpl(DriverDao driverDao, Cloudinary cloudinary) {
         this.driverDao = driverDao;
+        this.cloudinary = cloudinary;
+    }
+
+    @Override
+    public void createDriver(Driver driver, InputStream photoInputStream) {
+        Map uploadResult;
+        try {
+            if (photoInputStream != null && photoInputStream.available() > 0) {
+                byte[] photoBytes = photoInputStream.readAllBytes();
+
+                uploadResult = cloudinary.uploader().upload(photoBytes, new HashMap<>());
+
+                String photoUrl = (String) uploadResult.get("secure_url");
+                driver.setPhoto(photoUrl);
+            }
+            driverDao.create(driver);
+        } catch (Exception e) {
+            throw new ServiceException("Failed to create driver with photo", e);
+        }
     }
 
     @Override

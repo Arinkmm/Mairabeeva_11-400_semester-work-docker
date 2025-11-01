@@ -26,7 +26,7 @@ public class DriverDaoImpl implements DriverDao {
 
     @Override
     public void create(Driver driver) {
-        String sql = "INSERT INTO drivers (driver_number, team_id, first_name, last_name, date_of_birth, country, photoUrl) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO drivers (driver_number, team_id, first_name, last_name, date_of_birth, country, photo) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, driver.getDriverNumber());
