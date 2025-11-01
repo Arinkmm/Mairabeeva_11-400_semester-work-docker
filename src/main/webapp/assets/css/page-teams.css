@@ -3,6 +3,7 @@ section.hero {
     background: url('../images/background-page/teams.png') no-repeat center center;
     background-size: cover;
     background-blend-mode: lighten;
+    justify-content: flex-start;
 }
 .hero-content {
     max-width: 650px;

@@ -1,5 +1,6 @@
 section.hero {
     min-height: 70vh;
+    justify-content: flex-start;
 }
 .hero-content {
     max-width: 650px;

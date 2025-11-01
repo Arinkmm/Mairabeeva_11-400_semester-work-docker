@@ -32,7 +32,7 @@
             <tbody>
             <#list drivers as driver>
                 <tr onclick="window.location.href='${contextPath}/driver/${driver.driverNumber}';">
-                    <td><img src="${contextPath}/assets/images/driver-profile/${driver.photo!'default.jpg'}" class="driver-photo"/></td>
+                    <td><img src="${contextPath}/assets/images/driver-profile/${driver.photo!'default.jpg'}" class="photo"/></td>
                     <td class="driver-number">${driver.driverNumber}</td>
                     <td>${driver.firstName}</td>
                     <td>${driver.lastName}</td>

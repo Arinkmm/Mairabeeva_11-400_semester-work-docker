@@ -1,0 +1,37 @@
+section.hero {
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+    padding-right: 7vw;
+}
+
+.hero-content {
+    background: #fff;
+    max-width: 500px;
+    width: 100%;
+    padding: 2rem 3rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 30px #f9c5c5aa;
+    text-align: center;
+}
+
+.hero-title {
+    color: #c1121f;
+}
+
+.photo {
+    width: 150px;
+    height: 150px;
+    border: 3px solid #c1121f;
+    margin-bottom: 2rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.username {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+}

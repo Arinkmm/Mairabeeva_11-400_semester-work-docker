@@ -3,6 +3,7 @@ section.hero {
     background: url('../images/background-page/index.png') no-repeat center center;
     background-size: cover;
     background-blend-mode: lighten;
+    justify-content: flex-start;
 }
 
 .hero-content {

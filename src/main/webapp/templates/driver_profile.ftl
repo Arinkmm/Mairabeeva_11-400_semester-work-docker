@@ -22,7 +22,7 @@
 </nav>
 
 <section class="hero d-flex align-items-center justify-content-start">
-    <img src="${contextPath}/assets/images/driver-profile/${driver.photo!'default.jpg'}" class="driver-photo"/>
+    <img src="${contextPath}/assets/images/driver-profile/${driver.photo!'default.jpg'}" class="photo"/>
     <div class="hero-content">
         <h1 class="hero-title">
             Пилот №${driver.driverNumber}: ${driver.firstName} ${driver.lastName}

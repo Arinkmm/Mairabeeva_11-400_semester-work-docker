@@ -1,5 +1,6 @@
 section.hero {
     min-height: 45vh;
+    justify-content: flex-start;
 }
 
 .hero-content {
@@ -12,7 +13,7 @@ section.hero {
     font-size: 1.25rem;
 }
 
-.driver-photo {
+.photo {
     width: 180px;
     height: 180px;
     box-shadow: 0 0 10px rgba(193, 18, 31, 0.7);

@@ -65,7 +65,6 @@ section.hero {
     text-align: left;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     box-shadow: 0 8px 32px rgba(193,18,31,0.1);
 }
 
@@ -162,7 +161,7 @@ section.info-section:hover {
     max-width: 400px;
 }
 
-.driver-photo {
+.photo {
     border-radius: 50%;
     object-fit: cover;
 }
