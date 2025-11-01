@@ -32,6 +32,14 @@ public class Driver {
         this.photo = photo;
     }
 
+    public Driver(Team team, String firstName, String lastName, LocalDate dateOfBirth, String country) {
+        this.team = team;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.country = country;
+    }
+
     public int getDriverNumber() { return driverNumber; }
     public void setDriverNumber(int driverNumber) { this.driverNumber = driverNumber; }
 

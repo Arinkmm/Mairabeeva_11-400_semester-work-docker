@@ -20,11 +20,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void create(User user) {
-        String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        String sql = "INSERT INTO users (username, password, photo) VALUES (?, ?, ?)";
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
+            ps.setString(3, user.getPhoto());
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.error("Error creating user with username {}", user.getUsername(), e);
@@ -43,6 +44,11 @@ public class UserDaoImpl implements UserDao {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                if (!rs.wasNull()) {
+                    user.setPhoto(rs.getString("photo"));
+                } else {
+                    user.setPhoto(null);
+                }
                 return Optional.of(user);
             }
             return Optional.empty();
@@ -64,6 +70,11 @@ public class UserDaoImpl implements UserDao {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                if (!rs.wasNull()) {
+                    user.setPhoto(rs.getString("photo"));
+                } else {
+                    user.setPhoto(null);
+                }
                 return Optional.of(user);
             }
             return Optional.empty();

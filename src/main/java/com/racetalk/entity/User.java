@@ -4,13 +4,21 @@ public class User {
     private int id;
     private String username;
     private String password;
+    private String photo;
 
     public User() {}
 
-    public User(int id, String username, String password) {
+    public User(int id, String username, String password, String photo) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.photo = photo;
+    }
+
+    public User(String username, String password, String photo) {
+        this.username = username;
+        this.password = password;
+        this.photo = photo;
     }
 
     public User(String username, String password) {
@@ -26,4 +34,12 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 }
