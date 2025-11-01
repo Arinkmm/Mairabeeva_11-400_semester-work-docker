@@ -12,11 +12,13 @@
 <nav class="navbar navbar-expand-md sticky-top shadow-sm px-3">
     <a class="navbar-brand" href="${contextPath}/main">RaceTalk</a>
     <div class="collapse navbar-collapse justify-content-end">
-        <div class="navbar-nav">
+        <div class="navbar-nav d-flex align-items-center gap-3">
+            <a class="nav-link text-danger fw-bold" href="${contextPath}/user/profile/${user.id}">Мой профиль</a>
             <a class="nav-link text-danger fw-bold" href="${contextPath}/logout">Выйти</a>
         </div>
     </div>
 </nav>
+
 
 <section class="hero d-flex justify-content-start align-items-center">
     <div class="hero-content">
