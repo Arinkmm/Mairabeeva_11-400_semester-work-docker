@@ -35,8 +35,7 @@
             <a href="${contextPath}/user/edit" class="btn btn-main mt-2">Редактировать</a>
         </#if>
         <#if canDelete>
-            <form method="post" action="${contextPath}/user/profile/${user.id}">
-                <input type="hidden" name="action" value="delete" />
+            <form method="post" action="${contextPath}/user/delete">
                 <button type="submit" class="btn btn-main mt-2">Удалить профиль</button>
             </form>
         </#if>

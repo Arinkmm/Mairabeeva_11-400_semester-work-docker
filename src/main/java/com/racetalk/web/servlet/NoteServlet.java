@@ -63,30 +63,6 @@ public class NoteServlet extends HttpServlet {
                 return;
             }
 
-            String action = req.getParameter("action");
-
-            if ("delete".equals(action)) {
-                int noteId = Integer.parseInt(req.getParameter("noteId"));
-                noteService.deleteNote(noteId);
-                resp.sendRedirect(req.getContextPath() + "/notes");
-                return;
-            }
-
-            if ("edit".equals(action)) {
-                int noteId = Integer.parseInt(req.getParameter("noteId"));
-                String title = req.getParameter("title");
-                String content = req.getParameter("content");
-                Optional<Note> noteOpt = noteService.getById(noteId);
-                if (noteOpt.isPresent()) {
-                    Note note = noteOpt.get();
-                    note.setTitle(title);
-                    note.setContent(content);
-                    noteService.editNote(note);
-                }
-                resp.sendRedirect(req.getContextPath() + "/notes");
-                return;
-            }
-
             String title = req.getParameter("title");
             String content = req.getParameter("content");
 
@@ -97,10 +73,9 @@ public class NoteServlet extends HttpServlet {
             note.setCreatedAt(LocalDateTime.now());
 
             noteService.addNote(note);
-
             resp.sendRedirect(req.getContextPath() + "/notes");
         } catch (ServiceException e) {
-            logger.error("Failed to process note post request", e);
+            logger.error("Failed to add note", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             req.getRequestDispatcher("/error").forward(req, resp);
         }

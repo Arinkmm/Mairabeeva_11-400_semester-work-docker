@@ -2,7 +2,6 @@ package com.racetalk.web.servlet;
 
 import com.racetalk.entity.User;
 import com.racetalk.exception.ServiceException;
-import com.racetalk.service.TeamService;
 import com.racetalk.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,19 +14,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-@WebServlet(name = "UserEditServlet", urlPatterns = "/user/edit")
+@WebServlet(name = "UserEdit", urlPatterns = "/user/edit")
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024)
 public class UserEditServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(UserEditServlet.class);
-
     private UserService userService;
 
     @Override
     public void init() {
         userService = (UserService) getServletContext().getAttribute("userService");
-        if (userService == null) {
-            throw new IllegalStateException("UserService not initialized");
-        }
+        if (userService == null) throw new IllegalStateException("UserService not initialized");
     }
 
     @Override

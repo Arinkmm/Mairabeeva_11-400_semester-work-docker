@@ -22,10 +22,7 @@
 
 <main class="container my-5">
     <h1 class="section-title mb-4">Редактировать заметку</h1>
-    <form method="POST" action="${contextPath}/notes" class="mb-5 p-4 border rounded shadow-sm bg-light">
-        <input type="hidden" name="action" value="edit" />
-        <input type="hidden" name="noteId" value="${note.id}" />
-
+    <form method="POST" action="${contextPath}/notes/edit/${note.id}" class="mb-5 p-4 border rounded shadow-sm bg-light">
         <div class="mb-3">
             <label class="form-label fw-bold">Заголовок</label>
             <input type="text" name="title" class="form-control" value="${note.title}" required />

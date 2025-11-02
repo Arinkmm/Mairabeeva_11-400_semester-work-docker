@@ -47,9 +47,7 @@
                     <div class="d-flex gap-2">
                         <a href="${contextPath}/notes/edit/${note.id}" class="btn btn-outline-danger btn-sm">Редактировать</a>
 
-                        <form method="POST" action="${contextPath}/notes">
-                            <input type="hidden" name="action" value="delete" />
-                            <input type="hidden" name="noteId" value="${note.id}" />
+                        <form method="POST" action="${contextPath}/notes/delete/${note.id}">
                             <button type="submit" class="btn btn-outline-danger btn-sm">✕ Удалить</button>
                         </form>
                     </div>
