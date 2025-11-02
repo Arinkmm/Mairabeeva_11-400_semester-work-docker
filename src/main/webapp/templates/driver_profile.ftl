@@ -62,7 +62,9 @@
 
 <main class="container my-5">
     <h2 class="section-title mb-4">Результаты гонок</h2>
-    <#if raceResults?? && raceResults?size &gt; 0>
+    <#if raceResults?size == 0>
+        <p class="text-muted text-center mt-4">Нет данных по результатам этого пилота</p>
+    <#else>
         <div class="table-responsive">
             <table class="table table-hover align-middle shadow-sm">
                 <thead class="table-danger">
@@ -101,8 +103,6 @@
                 </tbody>
             </table>
         </div>
-    <#else>
-        <p class="text-muted">Нет данных по результатам этого пилота</p>
     </#if>
 </main>
 

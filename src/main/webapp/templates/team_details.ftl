@@ -53,34 +53,40 @@
             </tr>
             </thead>
             <tbody>
-            <#list drivers as driver>
+            <#if drivers?size == 0>
                 <tr>
-                    <td class="driver-cell">
-                        <#if driver.photo??>
-                            <img src="${driver.photo}" class="driver-photo"/>
-                        <#else>
-                            <img src="${contextPath}/assets/images/driver-profile/default.jpg" class="driver-photo"/>
-                        </#if>
-                        ${driver.firstName} ${driver.lastName}
-                    </td>
-                    <#list races as r>
-                        <#assign res = "">
-                        <#list results as result>
-                            <#if result.race?? && result.race.id == r.id && result.driver.driverNumber == driver.driverNumber>
-                                <#assign res = result>
-                                <#break>
-                            </#if>
-                        </#list>
-                        <td>
-                            <#if res?has_content>
-                                ${res.position}
-                            <#else>
-                                —
-                            </#if>
-                        </td>
-                    </#list>
+                    <td class="text-muted text-center mt-4">Гонщики отсутствуют</td>
                 </tr>
-            </#list>
+            <#else>
+                <#list drivers as driver>
+                    <tr>
+                        <td class="driver-cell">
+                            <#if driver.photo??>
+                                <img src="${driver.photo}" class="driver-photo"/>
+                            <#else>
+                                <img src="${contextPath}/assets/images/driver-profile/default.jpg" class="driver-photo"/>
+                            </#if>
+                            ${driver.firstName} ${driver.lastName}
+                        </td>
+                        <#list races as r>
+                            <#assign res = "">
+                            <#list results as result>
+                                <#if result.race?? && result.race.id == r.id && result.driver.driverNumber == driver.driverNumber>
+                                    <#assign res = result>
+                                    <#break>
+                                </#if>
+                            </#list>
+                            <td>
+                                <#if res?has_content>
+                                    ${res.position}
+                                <#else>
+                                    —
+                                </#if>
+                            </td>
+                        </#list>
+                    </tr>
+                </#list>
+            </#if>
             </tbody>
         </table>
     </div>

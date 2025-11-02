@@ -35,7 +35,9 @@
 
 <main class="container my-5">
     <h2 class="section-title mb-4">Результаты гонки</h2>
-    <#if results?? && results?size &gt; 0>
+    <#if results?size == 0>
+        <p class="text-muted text-center mt-4">Результаты гонки отсутствуют</p>
+    <#else>
         <div class="table-responsive">
             <table class="table table-hover align-middle shadow-sm">
                 <thead class="table-danger">
@@ -62,8 +64,6 @@
                 </tbody>
             </table>
         </div>
-    <#else>
-        <p class="text-muted">Результаты гонки отсутствуют</p>
     </#if>
 </main>
 

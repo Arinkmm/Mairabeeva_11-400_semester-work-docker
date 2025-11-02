@@ -29,7 +29,9 @@
         <button type="submit" class="btn btn-main">Добавить заметку</button>
     </form>
 
-    <#if notes?? && notes?size gt 0>
+    <#if notes?size == 0>
+        <p class="text-muted text-center mt-4">У вас пока нет заметок</p>
+    <#else>
         <div class="list-group">
             <#list notes as note>
                 <div class="list-group-item border rounded mb-3 shadow-sm d-flex justify-content-between align-items-start">
@@ -54,8 +56,6 @@
                 </div>
             </#list>
         </div>
-    <#else>
-        <p class="text-muted text-center mt-4">У вас пока нет заметок</p>
     </#if>
 </main>
 

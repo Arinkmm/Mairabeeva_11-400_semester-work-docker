@@ -36,7 +36,9 @@
 
 <main class="container my-5">
     <h2 class="section-title mb-4">Предстоящие гонки</h2>
-    <#if races?? && races?size gt 0>
+    <#if races?size == 0>
+        <p class="text-muted text-center mt-4">Предстоящих гонок пока нет</p>
+    <#else>
         <div class="table-responsive">
             <table class="table table-hover align-middle shadow-sm">
                 <thead class="table-danger">
@@ -56,10 +58,7 @@
                 </tbody>
             </table>
         </div>
-    <#else>
-        <p class="text-muted">Нет запланированных гонок</p>
     </#if>
-
     <#if isAdmin?? && isAdmin>
         <div class="d-flex justify-content-center mt-2">
             <a href="${contextPath}/race/create" class="btn btn-main">Добавить гонку</a>
