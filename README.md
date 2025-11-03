@@ -6,6 +6,7 @@ A simple web application for Formula 1 funs built with **Java Servlets**, **Free
 
 - **User Authentication** — Secure registration and login with BCrypt password hashing
 - **Session Management** — Role-based access control and authorization
+- **User Profiles** — View and edit user profiles with updated personal data function
 - **F1 Content** — Browse teams, drivers, and race results
 - **Personal Notes** — Create, read, update, and delete your notes
 - **Real-time Chat** — AJAX-powered chat with instant message delivery
@@ -47,7 +48,10 @@ Then run:
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    status VARCHAR(255),
+    photo VARCHAR(255),
+    role VARCHAR(20) NOT NULL DEFAULT 'USER'
 );
 
 CREATE TABLE teams (
@@ -86,7 +90,7 @@ CREATE TABLE race_results (
 
 CREATE TABLE notes (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id),
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title VARCHAR(200) NOT NULL,
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -94,7 +98,7 @@ CREATE TABLE notes (
 
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id),
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -65,7 +65,7 @@ public class InitListener implements ServletContextListener {
 
         importCleanupService = new ImportCleanupService(raceImportService, raceService, 2025);
         try {
-            //importCleanupService.initialize();
+            importCleanupService.initialize();
         } catch (Exception e) {
             logger.error("Failed during import and cleanup initialization", e);
         }
