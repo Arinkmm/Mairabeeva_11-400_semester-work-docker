@@ -45,11 +45,6 @@ public class LoginServlet extends HttpServlet {
                 httpSession.setAttribute("user", user);
                 httpSession.setMaxInactiveInterval(60 * 60);
 
-                Cookie cookie = new Cookie("user", String.valueOf(user.getId()));
-                cookie.setMaxAge(24 * 60 * 60);
-
-                resp.addCookie(cookie);
-
                 resp.sendRedirect(req.getContextPath() + "/main");
             } else {
                 req.setAttribute("LoginErrorMessage", "Неверное имя пользователя или пароль");

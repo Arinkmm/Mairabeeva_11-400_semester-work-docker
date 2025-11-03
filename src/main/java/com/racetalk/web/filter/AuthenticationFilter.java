@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +20,6 @@ public class AuthenticationFilter implements Filter {
         if (path.equals(rootPath)) {
             return true;
         }
-
         for (String exclude : excludedPaths) {
             if (path.startsWith(exclude)) {
                 return true;
@@ -41,23 +39,8 @@ public class AuthenticationFilter implements Filter {
         } else {
             HttpSession session = req.getSession(false);
 
-            if (session == null || session.getAttribute("user") == null) {
-                String userIdFromCookie = null;
-                if (req.getCookies() != null) {
-                    for (Cookie cookie : req.getCookies()) {
-                        if ("user".equals(cookie.getName())) {
-                            userIdFromCookie = cookie.getValue();
-                            break;
-                        }
-                    }
-                }
-                if (userIdFromCookie != null) {
-                    session = req.getSession(true);
-                    session.setAttribute("user", userIdFromCookie);
-                    chain.doFilter(request, response);
-                } else {
-                    res.sendRedirect(req.getContextPath() + "/login");
-                }
+            if (session == null) {
+                res.sendRedirect(req.getContextPath() + "/login");
             } else {
                 chain.doFilter(request, response);
             }

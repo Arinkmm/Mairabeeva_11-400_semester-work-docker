@@ -23,14 +23,6 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();
         }
 
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                c.setMaxAge(0);
-                resp.addCookie(c);
-            }
-        }
-
         resp.sendRedirect(req.getContextPath() + "/");
     }
 }
