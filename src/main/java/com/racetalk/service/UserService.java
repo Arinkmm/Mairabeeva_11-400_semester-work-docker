@@ -27,7 +27,5 @@ public interface UserService {
 
     boolean validateUsername(String username);
 
-    void changeUserRole(int userId, UserRole role);
-
     boolean isAdmin(User user);
 }

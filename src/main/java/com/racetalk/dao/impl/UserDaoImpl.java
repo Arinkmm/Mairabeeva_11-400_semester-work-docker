@@ -75,7 +75,14 @@ public class UserDaoImpl implements UserDao {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                User user = mapUser(rs);
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setStatus(rs.getString("status"));
+                user.setPhoto(rs.getString("photo"));
+                String role = rs.getString("role");
+                user.setRole(role != null ? UserRole.valueOf(role) : UserRole.USER);
                 return Optional.of(user);
             }
             return Optional.empty();
@@ -93,7 +100,14 @@ public class UserDaoImpl implements UserDao {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                User user = mapUser(rs);
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setStatus(rs.getString("status"));
+                user.setPhoto(rs.getString("photo"));
+                String role = rs.getString("role");
+                user.setRole(role != null ? UserRole.valueOf(role) : UserRole.USER);
                 return Optional.of(user);
             }
             return Optional.empty();
@@ -101,31 +115,5 @@ public class UserDaoImpl implements UserDao {
             logger.error("Error finding user by id {}", id, e);
             throw new DataAccessException("Failed to find user by id", e);
         }
-    }
-
-    @Override
-    public void updateRole(int userId, UserRole role) {
-        String sql = "UPDATE users SET role = ? WHERE id = ?";
-        try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, role.name());
-            ps.setInt(2, userId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            logger.error("Error updating user role for id {}", userId, e);
-            throw new DataAccessException("Failed to update user role", e);
-        }
-    }
-
-    private User mapUser(ResultSet rs) throws SQLException {
-        User user = new User();
-        user.setId(rs.getInt("id"));
-        user.setUsername(rs.getString("username"));
-        user.setPassword(rs.getString("password"));
-        user.setStatus(rs.getString("status"));
-        user.setPhoto(rs.getString("photo"));
-        String role = rs.getString("role");
-        user.setRole(role != null ? UserRole.valueOf(role) : UserRole.USER);
-        return user;
     }
 }
