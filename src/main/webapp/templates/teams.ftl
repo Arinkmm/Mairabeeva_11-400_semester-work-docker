@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Все команды</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-teams.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/teams.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

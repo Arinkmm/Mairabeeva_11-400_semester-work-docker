@@ -3,7 +3,7 @@ $(document).ready(function() {
         var html =
             '<div class="msg d-flex align-items-center mb-2" data-id="' + msg.id + '">' +
             '<a href="' + contextPath + '/user/profile/' + msg.userId + '" class="d-flex align-items-center text-decoration-none">' +
-            '<img src="' + (msg.photo || (contextPath + '/assets/images/driver-profile/default.png')) + '" class="rounded-circle me-2 photo" />' +
+            '<img src="' + (msg.photo || (contextPath + '/assets/images/user-default.png')) + '" class="rounded-circle me-2 photo" />' +
             '<span class="msg-user">' + msg.username + '</span>' +
             '</a>' +
             '<span class="msg-content ms-2 flex-grow-1">' + msg.content + '</span>' +

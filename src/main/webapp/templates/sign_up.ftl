@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Регистрация</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-sign_up.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/sign_up.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

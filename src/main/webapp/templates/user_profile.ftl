@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Профиль</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-user_profile.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/user_profile.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>
@@ -26,7 +26,7 @@
                     <img src="${user.photo}" class="photo" />
                 </a>
             <#else>
-                <img src="${contextPath}/assets/images/driver-profile/default.png" class="photo" />
+                <img src="${contextPath}/assets/images/user-default.png" class="photo" />
             </#if>
 
             <p class="username">${user.username}</p>

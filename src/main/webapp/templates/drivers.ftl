@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Гонщики сезона</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-drivers.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/drivers.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

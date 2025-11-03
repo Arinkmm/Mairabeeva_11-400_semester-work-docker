@@ -1,7 +1,7 @@
 <#include "/templates/base.ftl">
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-index.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/index.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

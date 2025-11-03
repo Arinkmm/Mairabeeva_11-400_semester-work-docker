@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Главная</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-main.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/main.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

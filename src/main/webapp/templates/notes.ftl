@@ -5,7 +5,7 @@
 </#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-notes.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/notes.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

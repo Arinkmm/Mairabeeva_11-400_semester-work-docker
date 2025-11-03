@@ -5,7 +5,7 @@
 </#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-driver_profile.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/driver_profile.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Результаты команды | ${team.name}</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-team_details.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/team_details.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>
@@ -25,9 +25,9 @@
         <div class="hero-flex">
             <div class="team-logo-hero">
                 <#if team.photo??>
-                    <img src="${team.photo}" class="team-logo"/>
+                    <img src="${team.photo}" />
                 <#else>
-                    <img src="${contextPath}/assets/images/team-logo/default.jpg" class="team-logo"/>
+                    <img src="${contextPath}/assets/images/team-logo/default.jpg" />
                 </#if>
             </div>
             <div class="hero-content">
@@ -63,9 +63,9 @@
                     <tr>
                         <td class="driver-cell">
                             <#if driver.photo??>
-                                <img src="${driver.photo}" class="driver-photo"/>
+                                <img src="${driver.photo}" class="photo" />
                             <#else>
-                                <img src="${contextPath}/assets/images/driver-profile/default.jpg" class="driver-photo"/>
+                                <img src="${contextPath}/assets/images/driver-profile/default.jpg" class="photo"/>
                             </#if>
                             ${driver.firstName} ${driver.lastName}
                         </td>

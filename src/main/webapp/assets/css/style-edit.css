@@ -1,3 +1,17 @@
+section.hero {
+    min-height: 45vh;
+    justify-content: flex-start;
+}
+
+.hero-content {
+    color: #c1121f;
+    text-align: left;
+    max-width: 600px;
+}
+.hero-desc {
+    font-size: 1.25rem;
+}
+
 .container-edit-profile {
     max-width: 550px;
     margin: 3rem auto;

@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Прошедшие гонки</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-races.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/races.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

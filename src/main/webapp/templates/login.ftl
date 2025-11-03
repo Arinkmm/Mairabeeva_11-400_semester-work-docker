@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Вход</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-login.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/login.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

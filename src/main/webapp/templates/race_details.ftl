@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Результаты гонки | ${race.location}</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-race_details.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/race_details.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

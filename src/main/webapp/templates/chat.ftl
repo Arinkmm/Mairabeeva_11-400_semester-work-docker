@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Чат</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-chat.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/chat.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

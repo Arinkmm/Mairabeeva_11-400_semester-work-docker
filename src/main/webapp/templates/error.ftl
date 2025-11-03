@@ -3,7 +3,7 @@
 <#macro title>RaceTalk — Ошибка ${statusCode}</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-error.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/error.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>

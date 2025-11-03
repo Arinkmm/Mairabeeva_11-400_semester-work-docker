@@ -3,8 +3,7 @@
 <#macro title>RaceTalk — Добавить новую команду</#macro>
 
 <#macro additionalCss>
-    <link href="${contextPath}/assets/css/page-notes.css" rel="stylesheet" />
-    <link href="${contextPath}/assets/css/page-user_edit.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/style-edit.css" rel="stylesheet" />
 </#macro>
 
 <#macro navbar>
