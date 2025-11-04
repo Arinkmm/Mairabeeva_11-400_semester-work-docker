@@ -2,7 +2,6 @@ package com.racetalk.web.servlet;
 
 import com.racetalk.entity.Race;
 import com.racetalk.entity.User;
-import com.racetalk.entity.UserRole;
 import com.racetalk.exception.ServiceException;
 import com.racetalk.service.RaceService;
 import com.racetalk.service.UserService;

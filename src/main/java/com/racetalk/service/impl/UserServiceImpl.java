@@ -10,7 +10,6 @@ import com.racetalk.service.UserService;
 import com.racetalk.util.PasswordHasherUtil;
 import com.racetalk.util.PasswordValidator;
 import com.racetalk.util.UsernameValidator;
-import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

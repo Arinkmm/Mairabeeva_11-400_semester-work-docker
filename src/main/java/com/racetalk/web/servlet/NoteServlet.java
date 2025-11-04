@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @WebServlet(name = "Note", urlPatterns = "/notes")
 public class NoteServlet extends HttpServlet {

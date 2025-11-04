@@ -2,7 +2,6 @@ package com.racetalk.web.servlet;
 
 import com.racetalk.entity.Note;
 import com.racetalk.entity.User;
-import com.racetalk.exception.ServiceException;
 import com.racetalk.service.NoteService;
 import com.racetalk.service.UserService;
 import org.slf4j.Logger;

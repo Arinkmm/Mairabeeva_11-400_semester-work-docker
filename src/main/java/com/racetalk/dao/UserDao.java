@@ -1,7 +1,6 @@
 package com.racetalk.dao;
 
 import com.racetalk.entity.User;
-import com.racetalk.entity.UserRole;
 
 import java.util.Optional;
 

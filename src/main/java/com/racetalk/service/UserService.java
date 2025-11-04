@@ -1,7 +1,6 @@
 package com.racetalk.service;
 
 import com.racetalk.entity.User;
-import com.racetalk.entity.UserRole;
 
 import java.io.InputStream;
 import java.util.Optional;

@@ -11,14 +11,6 @@ public class Note {
 
     public Note() {}
 
-    public Note(int id, User user, String title, String content, LocalDateTime createdAt) {
-        this.id = id;
-        this.user = user;
-        this.title = title;
-        this.content = content;
-        this.createdAt = createdAt;
-    }
-
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

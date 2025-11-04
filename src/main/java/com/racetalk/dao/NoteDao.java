@@ -14,7 +14,6 @@ public interface NoteDao {
 
     void deleteById(int id);
 
-
     List<Note> findByUser(User user);
 
     Optional<Note> findById(int id);

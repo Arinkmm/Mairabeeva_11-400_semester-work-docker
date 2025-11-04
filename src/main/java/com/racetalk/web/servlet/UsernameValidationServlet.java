@@ -3,7 +3,6 @@ package com.racetalk.web.servlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.racetalk.exception.ServiceException;
 import com.racetalk.service.UserService;
-import com.racetalk.util.UsernameValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
