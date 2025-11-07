@@ -45,8 +45,14 @@ public class UserEditServlet extends HttpServlet {
             String status = req.getParameter("status");
 
             if (username != null) {
-                if (!userService.validateUsername(username)) {
+                if (!userService.isUsernameUnique(username)) {
                     req.setAttribute("EditErrorMessage", "Имя занято");
+                    req.getRequestDispatcher("/templates/user_edit.ftl").forward(req, resp);
+                    return;
+                }
+
+                if (!userService.validateUsername(username)) {
+                    req.setAttribute("EditErrorMessage", "Имя пользователя не соответствует требованиям");
                     req.getRequestDispatcher("/templates/user_edit.ftl").forward(req, resp);
                     return;
                 }
