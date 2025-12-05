@@ -250,4 +250,4 @@ This creates a `.war` file in the `target/` folder.
 
 Got questions? Need help with setup? Found a bug?
 
-Email: `mairabeeva42@gmail.com`
+Email: **mairabeeva42@gmail.com**
