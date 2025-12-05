@@ -15,6 +15,42 @@ A simple web application for Formula 1 funs built with **Java Servlets**, **Free
 - **Client-side Validation** — AJAX validation for username uniqueness and password strength on registration
 - **Error Handling** — Custom error pages and exception handling
 
+## Requirements
+
+- Java 17+
+- Apache Tomcat 10+
+- PostgreSQL 13+
+- Maven 3.8+
+- IntelliJ IDEA 2023+ (recommended)
+
+## Project Architecture
+
+### Package Structure
+```
+src/main/java/com/racetalk/
+├── dao/ # Data Access Objects
+├── service/ # Business logic
+├── dto/ # Data Transfer Objects
+├── entity/ # Domain entities (User, Team, Driver...)
+├── exception/ # Custom exceptions
+├── util/ # Utilities (DB, Cloudinary, BCrypt...)
+├── web/
+│   ├── servlet/ # Controllers (RaceServlet, ChatServlet...)
+│   ├── filter/ # AuthenticationFilter
+└── └── listener/ # InitListener
+```
+
+## Templates & Assets
+
+```
+web-app/
+├── templates/
+├── assets/
+│   ├── css/
+│   ├── js/
+└── └── images/ # team-logos, drivers, icons
+```
+
 ## Setup Instructions
 
 ### 1. Clone the Repository
@@ -24,7 +60,7 @@ In IntelliJ IDEA:
 1. Open IntelliJ IDEA
 2. On the Welcome screen, click the button **Clone Repository**
 3. In the popup window:
-   - **URL:** Paste `<repository-url>`
+   - **URL:** Paste `https://github.com/Arinkmm/RaceTalk.git`
    - **Directory:** Choose where to save (or keep default)
 4. Click **Clone**
 5. Wait for download to complete
@@ -167,3 +203,51 @@ This creates a `.war` file in the `target/` folder.
 ### Templates
 - All pages use FreeMarker for dynamic content rendering
 - Consistent styling with Base CSS + page-specific CSS files
+
+## Main Screenshots
+
+### Index Page
+
+![Index Page](images/index.png)
+
+### Sign Up Page
+
+![Sign Up Page](images/sign_up.png)
+
+### Main Page
+
+![Main Page](images/main.png)
+
+### Page with drivers
+
+![Page with drivers](images/drivers.png)
+
+### Page with teams
+
+![Page with teams](images/teams.png)
+
+### Page with past races
+
+![Page with past races](images/races.png)
+
+### Page with results
+
+![Page with results](images/results.png)
+
+### Page with user's notes
+
+![Notes Page](images/notes.png)
+
+### Chat
+
+![Chat](images/chat.png)
+
+### User's Profile
+
+![Profile](images/profile.png)
+
+## Support & Contact
+
+Got questions? Need help with setup? Found a bug?
+
+Email: `mairabeeva42@gmail.com`
