@@ -1,0 +1,38 @@
+services:
+  app:
+    build: .
+    container_name: racetalk-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/${DATABASE_CONNECTION_DB}
+      - DB_USERNAME=${DATABASE_CONNECTION_USERNAME}
+      - DB_PASSWORD=${DATABASE_CONNECTION_PASSWORD}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+    networks:
+      - racetalk-net
+
+  db:
+    image: postgres:17
+    container_name: racetalk-db
+    environment:
+      POSTGRES_DB: ${DATABASE_CONNECTION_DB}
+      POSTGRES_USER: ${DATABASE_CONNECTION_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_CONNECTION_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - racetalk-net
+
+volumes:
+  db_data:
+
+networks:
+  racetalk-net:
+    driver: bridge
